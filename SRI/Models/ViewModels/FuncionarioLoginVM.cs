@@ -7,7 +7,7 @@ using System.Web;
 namespace SRI.Models.ViewModels
 {
     
-    public class FuncionarioLoginViewModel
+    public class FuncionarioLoginVM
     {
 
         [Key]
@@ -19,16 +19,6 @@ namespace SRI.Models.ViewModels
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Ingrese su contraseña")]
         public string password { get; set; }
-
-
-
-
-
-
-
-
-
-
 
 
 

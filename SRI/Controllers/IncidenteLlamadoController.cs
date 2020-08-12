@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SRI.Models;
+using SRI.Models.ViewModels;
 
 namespace SRI.Controllers
 {
@@ -46,13 +47,42 @@ namespace SRI.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,telefono_saliente,telefono_entrante,hora_inicio,hora_fin,nombre_persona_llama")] IncidenteLlamado incidenteLlamado)
+        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,telefono_saliente,telefono_entrante,hora_inicio,hora_fin,nombre_persona_llama")] IncidenteLlamadoVM incidenteLlamadoVM)
         {
-            if (ModelState.IsValid)
+
+
+
+            string email = User.Identity.Name;
+
+            using (db_SRI context = new db_SRI())
             {
-                db.Incidentes.Add(incidenteLlamado);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                using (var dbContextTransaction = context.Database.BeginTransaction())
+                {
+                    IncidenteLlamado incidenteLlamado = new IncidenteLlamado();
+
+                    incidenteLlamado.hora_fin = incidenteLlamadoVM.hora_fin;
+                    incidenteLlamado.hora_inicio = incidenteLlamadoVM.hora_inicio;
+                    incidenteLlamado.fecha_suceso = incidenteLlamadoVM.fecha_suceso;
+                    incidenteLlamado.emocion = (int)incidenteLlamadoVM.emocion;
+                    incidenteLlamado.telefono_entrante = incidenteLlamadoVM.telefono_entrante;
+                    incidenteLlamado.telefono_saliente = incidenteLlamadoVM.telefono_saliente;
+                    incidenteLlamado.hora_inicio = incidenteLlamadoVM.hora_inicio;
+                    incidenteLlamado.hora_fin = incidenteLlamadoVM.hora_fin;
+                    incidenteLlamado.nombre_persona_llama = incidenteLlamadoVM.nombre_persona_llama;
+
+
+                    Funcionario funcionario = context.Funcionario.FirstOrDefault(a => a.mail.Equals(email));
+                    incidenteLlamado.Funcionario = funcionario;
+
+                    if (ModelState.IsValid)
+                    {
+                        context.Incidentes.Add(incidenteLlamado);
+                        context.SaveChanges();
+                        dbContextTransaction.Commit();
+                        return RedirectToAction("Index");
+                    }
+
+                }
             }
 
             return View(incidenteLlamado);

@@ -7,20 +7,23 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SRI.Models
+namespace SRI.Models.ViewModels
 {
-    using SRI.Models.ViewModels;
     using System;
     using System.Collections.Generic;
     
-    public partial class IncidenteLlamado : Incidente
+    public partial class IncidenteMailVM : IncidenteVM
     {
-        public string telefono_saliente { get; set; }
-        public string telefono_entrante { get; set; }
-        public System.DateTime hora_inicio { get; set; }
-        public System.DateTime hora_fin { get; set; }
-        public string nombre_persona_llama { get; set; }
-
-        
+        public IncidenteMailVM()
+        {
+            this.Destinatarios = new HashSet<Destinatarios>();
+        }
+    
+        public string asunto { get; set; }
+        public string respuesta { get; set; }
+        public string contenido { get; set; }
+        public string remitente { get; set; }
+    
+        public virtual ICollection<Destinatarios> Destinatarios { get; set; }
     }
 }

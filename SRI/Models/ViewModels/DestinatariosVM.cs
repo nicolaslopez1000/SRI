@@ -7,20 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SRI.Models
+namespace SRI.Models.ViewModels
 {
-    using SRI.Models.ViewModels;
+    using SRI.Models.Enums;
     using System;
     using System.Collections.Generic;
     
-    public partial class IncidenteLlamado : Incidente
+    public partial class DestinatariosVM
     {
-        public string telefono_saliente { get; set; }
-        public string telefono_entrante { get; set; }
-        public System.DateTime hora_inicio { get; set; }
-        public System.DateTime hora_fin { get; set; }
-        public string nombre_persona_llama { get; set; }
-
-        
+        public string valor { get; set; }
+        public TipoEmail tipo { get; set; }
+        public int Id { get; set; }
+    
     }
 }

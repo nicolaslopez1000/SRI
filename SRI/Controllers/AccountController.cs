@@ -35,7 +35,7 @@ namespace SRI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(FuncionarioLoginViewModel funcionario)
+        public ActionResult Login(FuncionarioLoginVM funcionario)
         {
             if (ModelState.IsValid)
             {

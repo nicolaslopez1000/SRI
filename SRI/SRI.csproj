@@ -136,9 +136,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\FuncionarioHelper.cs" />
+    <Compile Include="Helpers\ViewModelHelper.cs" />
     <Compile Include="Models\Destinatarios.cs">
       <DependentUpon>SRIModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Enums\Enums.cs" />
     <Compile Include="Models\Funcionario.cs">
       <DependentUpon>SRIModel.tt</DependentUpon>
     </Compile>
@@ -160,7 +162,8 @@
     <Compile Include="Models\PalabraClave.cs">
       <DependentUpon>SRIModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ViewModels\FuncionarioLoginViewModel.cs" />
+    <Compile Include="Models\ViewModels\DestinatariosVM.cs" />
+    <Compile Include="Models\ViewModels\FuncionarioLoginVM.cs" />
     <Compile Include="Models\SRIModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -176,6 +179,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SRIModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\FuncionarioVM.cs" />
+    <Compile Include="Models\ViewModels\HorarioVM.cs" />
+    <Compile Include="Models\ViewModels\IncidenteChatWppVM.cs" />
+    <Compile Include="Models\ViewModels\IncidenteLlamadoVM.cs" />
+    <Compile Include="Models\ViewModels\IncidenteMailVM.cs" />
+    <Compile Include="Models\ViewModels\IncidenteVM.cs" />
+    <Compile Include="Models\ViewModels\PalabraClaveVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
