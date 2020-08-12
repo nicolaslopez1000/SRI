@@ -1,0 +1,91 @@
+﻿@model SRI.Models.IncidenteLlamado
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>IncidenteLlamado</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha_suceso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha_suceso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha_creacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha_creacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.emocion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.emocion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.resolucion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.resolucion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefono_saliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono_saliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefono_entrante)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono_entrante)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hora_inicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hora_inicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hora_fin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hora_fin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre_persona_llama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre_persona_llama)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

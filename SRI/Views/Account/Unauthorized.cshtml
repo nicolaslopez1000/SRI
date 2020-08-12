@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Unauthorized";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Error 401</h1>
+<hr />
+<h2>The page you are trying to access requires administrator privilege.</h2>
+<input type="button" value="Redirect to home" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Home")'" />
