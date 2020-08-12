@@ -16,15 +16,36 @@ namespace SRI.Models.ViewModels
 
     public partial class FuncionarioVM
     {
+
+        [Display(Name = "Apellido")]
+        [Required(ErrorMessage = "Ingrese el apellido")]
+        public string apellido { get; set; }
+
+        [Display(Name = "Nombre ")]
+        [Required(ErrorMessage = "Ingrese el nombre")]
         public string nombre { get; set; }
+
+        [Display(Name = "Cedula ")]
+        [Required(ErrorMessage = "Ingrese la cedula")]
         [Key]
         public string ci { get; set; }
+
+        [Required(ErrorMessage = "Ingrese el mail")]
+        [Display(Name = "Mail ")]
+        [DataType(DataType.EmailAddress)]
+
         public string mail { get; set; }
+
+        [Display(Name = "Celular ")]
+        [Required(ErrorMessage = "Ingrese el celular")]
         public string celular { get; set; }
+
+        [Display(Name = "Contraseña ")]
+        [DataType(DataType.Password)]
+        [Required(ErrorMessage = "Ingrese su contraseña")]
         public string password { get; set; }
-        public Rol rol { get; set; }
-        public string apellido { get; set; }
-        public Nullable<bool> is_eliminado { get; set; }
+
+        [Display(Name = "Horario")]
         public virtual HorarioVM Horario { get; set; }
 
     }

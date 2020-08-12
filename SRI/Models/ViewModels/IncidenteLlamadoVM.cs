@@ -11,13 +11,33 @@ namespace SRI.Models.ViewModels
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class IncidenteLlamadoVM : IncidenteVM
     {
+
+        [Required(ErrorMessage = "Ingrese el telefóno saliente ")]
+        [Display(Name = "Teléfono saliente")]
+        [DataType(DataType.PhoneNumber)]
         public string telefono_saliente { get; set; }
+
+        [Required(ErrorMessage = "Ingrese el teléfono entrante")]
+        [Display(Name = "Teléfono entrante")]
+        [DataType(DataType.PhoneNumber)]
         public string telefono_entrante { get; set; }
+
+        [Required(ErrorMessage = "Ingrese la hora de inicio")]
+        [Display(Name = "Hora inicio")]
+        [DataType(DataType.Time)]
         public System.DateTime hora_inicio { get; set; }
+
+        [Required(ErrorMessage = "Ingrese la hora de fin")]
+        [Display(Name = "Hora fin")]
+        [DataType(DataType.Time)]
         public System.DateTime hora_fin { get; set; }
+
+        [Required(ErrorMessage = "Ingrese el nombre de la persona que llama")]
+        [Display(Name = "Nombre persona que llama")]
         public string nombre_persona_llama { get; set; }
     }
 }

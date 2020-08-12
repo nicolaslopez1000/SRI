@@ -9,7 +9,6 @@
 
 namespace SRI.Models
 {
-    using SRI.Models.ViewModels;
     using System;
     using System.Collections.Generic;
     
@@ -20,7 +19,5 @@ namespace SRI.Models
         public System.DateTime hora_inicio { get; set; }
         public System.DateTime hora_fin { get; set; }
         public string nombre_persona_llama { get; set; }
-
-        
     }
 }

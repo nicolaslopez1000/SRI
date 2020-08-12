@@ -11,8 +11,7 @@ namespace SRI.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Funcionario
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,7 +21,6 @@ namespace SRI.Models
         }
     
         public string nombre { get; set; }
-        [Key]
         public string ci { get; set; }
         public string mail { get; set; }
         public string celular { get; set; }

@@ -441,6 +441,9 @@
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="FK_IncidenteMailDestinatarios" TypeName="db_SRI_Model.FK_IncidenteMailDestinatarios" StoreEntitySet="Destinatarios">
+            <EndProperty Name="IncidenteMail">
+              <ScalarProperty Name="Id" ColumnName="IncidenteMail_Id" />
+            </EndProperty>
             <EndProperty Name="Destinatarios">
               <ScalarProperty Name="Id" ColumnName="Id" />
             </EndProperty>

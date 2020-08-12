@@ -85,7 +85,7 @@ namespace SRI.Controllers
                 }
             }
 
-            return View(incidenteLlamado);
+            return View(incidenteLlamadoVM);
         }
 
         // GET: IncidenteLlamado/Edit/5

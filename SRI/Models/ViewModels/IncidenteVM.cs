@@ -12,7 +12,8 @@ namespace SRI.Models.ViewModels
     using SRI.Models.Enums;
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class IncidenteVM
     {
         public IncidenteVM()
@@ -21,9 +22,20 @@ namespace SRI.Models.ViewModels
         }
     
         public int Id { get; set; }
+
+        [Display(Name = "Fecha suceso")]
+        [Required(ErrorMessage = "Ingrese la fecha del suceso")]
+        [DataType(DataType.Date)]
         public System.DateTime fecha_suceso { get; set; }
+
+        [Display(Name = "Fecha creacion")]
         public Nullable<System.DateTime> fecha_creacion { get; set; }
+
+        [Display(Name = "Emoción")]
+        [Required(ErrorMessage = "Seleccione la emocion")]
         public Emocion emocion { get; set; }
+
+        [Display(Name = "Resolucion")]
         public string resolucion { get; set; }
     
         public virtual FuncionarioVM Funcionario { get; set; }
