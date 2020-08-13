@@ -22,9 +22,11 @@ namespace SRI.Models
     
         public int Id { get; set; }
         public System.DateTime fecha_suceso { get; set; }
-        public Nullable<System.DateTime> fecha_creacion { get; set; }
+        public System.DateTime fecha_creacion { get; set; }
         public int emocion { get; set; }
         public string resolucion { get; set; }
+        public string descripcion { get; set; }
+        public int tipo { get; set; }
     
         public virtual Funcionario Funcionario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

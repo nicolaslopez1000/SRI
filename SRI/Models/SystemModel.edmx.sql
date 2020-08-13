@@ -101,10 +101,12 @@ GO
 CREATE TABLE [dbo].[Incidente] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [fecha_suceso] datetime  NOT NULL,
-    [fecha_creacion] datetime DEFAULT GETDATE(),
+    [fecha_creacion] datetime NOT NULL,
     [emocion] int  NOT NULL,
     [Funcionario_ci] nvarchar(50)  NOT NULL,
     [resolucion] nvarchar(50)  ,
+    [descripcion] nvarchar(200)  ,
+    [tipo] int NOT NULL  
 
 );
 GO

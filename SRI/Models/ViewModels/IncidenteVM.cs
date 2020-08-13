@@ -37,7 +37,14 @@ namespace SRI.Models.ViewModels
 
         [Display(Name = "Resolucion")]
         public string resolucion { get; set; }
-    
+
+        [Display(Name = "Resolucion")]
+        public string descripcion { get; set; }
+
+        [Display(Name = "Tipo de incidente")]
+        [Required(ErrorMessage = "Seleccione el tipo de incidente")]
+        public TipoIncidente tipo { get; set; }
+
         public virtual FuncionarioVM Funcionario { get; set; }
         public virtual List<PalabraClaveVM> PalabraClave { get; set; }
     }

@@ -11,8 +11,8 @@
         <EntityTypeShape EntityType="db_SRI_Model.Incidente" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="db_SRI_Model.IncidenteChatWpp" Width="1.5" PointX="7.5" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="db_SRI_Model.IncidenteLlamado" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_SRI_Model.IncidenteMail" Width="1.5" PointX="7.5" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="db_SRI_Model.PalabraClave" Width="1.5" PointX="7.5" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_SRI_Model.IncidenteMail" Width="1.5" PointX="7.625" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_SRI_Model.PalabraClave" Width="1.5" PointX="5.5" PointY="9.75" IsExpanded="true" />
         <AssociationConnector Association="db_SRI_Model.FK_IncidenteMailDestinatarios" ManuallyRouted="false" />
         <AssociationConnector Association="db_SRI_Model.FK_FuncionarioIncidente" ManuallyRouted="false" />
         <AssociationConnector Association="db_SRI_Model.FK_HorarioFuncionario" ManuallyRouted="false" />

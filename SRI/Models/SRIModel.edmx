@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="db_SRI_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="db_SRI_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Destinatarios">
           <Key>
             <PropertyRef Name="Id" />
@@ -42,10 +42,12 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="fecha_suceso" Type="datetime" Nullable="false" />
-          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
           <Property Name="emocion" Type="int" Nullable="false" />
           <Property Name="Funcionario_ci" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="resolucion" Type="nvarchar" MaxLength="50" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="200" />
+          <Property Name="tipo" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="IncidenteChatWpp">
           <Key>
@@ -214,8 +216,7 @@
             <End Role="PalabraClave" EntitySet="PalabraClave" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="db_SRI_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -258,11 +259,13 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="fecha_suceso" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="emocion" Type="Int32" Nullable="false" />
           <Property Name="resolucion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Funcionario" Relationship="Self.FK_FuncionarioIncidente" FromRole="Incidente" ToRole="Funcionario" />
           <NavigationProperty Name="PalabraClave" Relationship="Self.FK_IncidentePalabraClave" FromRole="Incidente" ToRole="PalabraClave" />
+          <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="tipo" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="IncidenteChatWpp" BaseType="db_SRI_Model.Incidente">
           <Property Name="respuesta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -372,6 +375,8 @@
           <EntitySetMapping Name="Incidente">
             <EntityTypeMapping TypeName="IsTypeOf(db_SRI_Model.Incidente)">
               <MappingFragment StoreEntitySet="Incidente">
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="resolucion" ColumnName="resolucion" />
                 <ScalarProperty Name="emocion" ColumnName="emocion" />

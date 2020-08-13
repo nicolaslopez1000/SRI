@@ -18,6 +18,18 @@ namespace SRI.Models.Enums
         cc = 1
     }
 
+    public enum TipoIncidente : int
+    {
+        [Display(Name = "Común")]
+        comun = 0,
+        [Display(Name = "Mail")]
+        mail = 1,
+        [Display(Name = "Chat de WhatsApp")]
+        chatWpp = 2,
+        [Display(Name = "Llamado teléfonico")]
+        llamado = 3
+    }
+
     public enum Rol : int
     {
         [Display(Name = "Administrador")]

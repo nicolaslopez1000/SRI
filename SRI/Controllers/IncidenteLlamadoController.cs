@@ -43,14 +43,10 @@ namespace SRI.Controllers
         }
 
         // POST: IncidenteLlamado/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,telefono_saliente,telefono_entrante,hora_inicio,hora_fin,nombre_persona_llama")] IncidenteLlamadoVM incidenteLlamadoVM)
         {
-
-
 
             string email = User.Identity.Name;
 
@@ -60,19 +56,19 @@ namespace SRI.Controllers
                 {
                     IncidenteLlamado incidenteLlamado = new IncidenteLlamado();
 
-                    incidenteLlamado.hora_fin = incidenteLlamadoVM.hora_fin;
-                    incidenteLlamado.hora_inicio = incidenteLlamadoVM.hora_inicio;
                     incidenteLlamado.fecha_suceso = incidenteLlamadoVM.fecha_suceso;
-                    incidenteLlamado.emocion = (int)incidenteLlamadoVM.emocion;
-                    incidenteLlamado.telefono_entrante = incidenteLlamadoVM.telefono_entrante;
-                    incidenteLlamado.telefono_saliente = incidenteLlamadoVM.telefono_saliente;
-                    incidenteLlamado.hora_inicio = incidenteLlamadoVM.hora_inicio;
-                    incidenteLlamado.hora_fin = incidenteLlamadoVM.hora_fin;
-                    incidenteLlamado.nombre_persona_llama = incidenteLlamadoVM.nombre_persona_llama;
-
+                    incidenteLlamado.fecha_creacion = DateTime.Now;
+                    incidenteLlamado.resolucion = incidenteLlamadoVM.resolucion;
 
                     Funcionario funcionario = context.Funcionario.FirstOrDefault(a => a.mail.Equals(email));
                     incidenteLlamado.Funcionario = funcionario;
+
+                    incidenteLlamado.telefono_entrante = incidenteLlamadoVM.telefono_entrante;
+                    incidenteLlamado.telefono_saliente = incidenteLlamadoVM.telefono_saliente;
+                    incidenteLlamado.nombre_persona_llama = incidenteLlamadoVM.nombre_persona_llama;
+                    incidenteLlamado.hora_fin = incidenteLlamadoVM.hora_fin;
+                    incidenteLlamado.hora_inicio = incidenteLlamadoVM.hora_inicio;
+
 
                     if (ModelState.IsValid)
                     {
@@ -104,8 +100,6 @@ namespace SRI.Controllers
         }
 
         // POST: IncidenteLlamado/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,telefono_saliente,telefono_entrante,hora_inicio,hora_fin,nombre_persona_llama")] IncidenteLlamado incidenteLlamado)
