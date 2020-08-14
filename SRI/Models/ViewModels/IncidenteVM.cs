@@ -22,6 +22,7 @@ namespace SRI.Models.ViewModels
         }
     
         public int Id { get; set; }
+        public string palabrasClave { get; set; }
 
         [Display(Name = "Fecha suceso")]
         [Required(ErrorMessage = "Ingrese la fecha del suceso")]
@@ -38,7 +39,8 @@ namespace SRI.Models.ViewModels
         [Display(Name = "Resolucion")]
         public string resolucion { get; set; }
 
-        [Display(Name = "Resolucion")]
+        [Display(Name = "Descripción")]
+        [DataType(DataType.MultilineText)]
         public string descripcion { get; set; }
 
         [Display(Name = "Tipo de incidente")]
@@ -46,6 +48,7 @@ namespace SRI.Models.ViewModels
         public TipoIncidente tipo { get; set; }
 
         public virtual FuncionarioVM Funcionario { get; set; }
+
         public virtual List<PalabraClaveVM> PalabraClave { get; set; }
     }
 }

@@ -154,7 +154,7 @@ CREATE TABLE [dbo].[IncidenteChatWpp] (
     [respuesta] nvarchar(max)  NOT NULL,
     [telefono_entrante] nvarchar(max)  NOT NULL,
     [telefono_saliente] nvarchar(max)  NOT NULL,
-    [nombre_persona_llama] nvarchar(max)  NOT NULL,
+    [nombre_persona_escribe] nvarchar(max)  NOT NULL,
     [Id] int  NOT NULL
 );
 GO

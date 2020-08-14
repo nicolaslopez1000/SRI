@@ -1,0 +1,106 @@
+﻿@model SRI.Models.IncidenteMail
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>IncidenteMail</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.fecha_suceso)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fecha_suceso)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.fecha_creacion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fecha_creacion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.emocion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.emocion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.resolucion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.resolucion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.descripcion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.descripcion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.tipo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.tipo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.asunto)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.asunto)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.respuesta)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.respuesta)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.contenido)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.contenido)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.remitente)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.remitente)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

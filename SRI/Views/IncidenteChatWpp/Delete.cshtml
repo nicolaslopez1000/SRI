@@ -1,0 +1,112 @@
+﻿@model SRI.Models.IncidenteChatWpp
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+</head>
+<body>
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>IncidenteChatWpp</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.fecha_suceso)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fecha_suceso)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.fecha_creacion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.fecha_creacion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.emocion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.emocion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.resolucion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.resolucion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.descripcion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.descripcion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.tipo)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.tipo)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.respuesta)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.respuesta)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.telefono_entrante)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.telefono_entrante)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.telefono_saliente)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.telefono_saliente)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.nombre_persona_llama)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.nombre_persona_llama)
+            </dd>
+    
+        </dl>
+    
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+    
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+</body>
+</html>

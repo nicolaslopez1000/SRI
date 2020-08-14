@@ -7,9 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SRI.Models;
+using SRI.Models.ViewModels;
 
 namespace SRI.Controllers
 {
+    [Authorize]
     public class IncidenteController : Controller
     {
         private db_SRI db = new db_SRI();
@@ -41,22 +43,47 @@ namespace SRI.Controllers
             return View();
         }
 
-        // POST: Incidente/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion")] Incidente incidente)
+        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,palabrasClave,descripcion")] IncidenteVM incidente)
         {
             if (ModelState.IsValid)
             {
-                db.Incidente.Add(incidente);
-                db.SaveChanges();
+               
                 return RedirectToAction("Index");
             }
 
             return View(incidente);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: Incidente/Edit/5
         public ActionResult Edit(int? id)
@@ -73,9 +100,6 @@ namespace SRI.Controllers
             return View(incidente);
         }
 
-        // POST: Incidente/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion")] Incidente incidente)
@@ -89,7 +113,7 @@ namespace SRI.Controllers
             return View(incidente);
         }
 
-        // GET: Incidente/Delete/5
+
         public ActionResult Delete(int? id)
         {
             if (id == null)

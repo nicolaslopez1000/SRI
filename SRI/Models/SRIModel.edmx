@@ -56,7 +56,7 @@
           <Property Name="respuesta" Type="nvarchar(max)" Nullable="false" />
           <Property Name="telefono_entrante" Type="nvarchar(max)" Nullable="false" />
           <Property Name="telefono_saliente" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="nombre_persona_llama" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="nombre_persona_escribe" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="IncidenteLlamado">
@@ -271,7 +271,7 @@
           <Property Name="respuesta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="telefono_entrante" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="telefono_saliente" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="nombre_persona_llama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nombre_persona_escribe" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="IncidenteLlamado" BaseType="db_SRI_Model.Incidente">
           <Property Name="telefono_saliente" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -396,8 +396,8 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(db_SRI_Model.IncidenteChatWpp)">
               <MappingFragment StoreEntitySet="IncidenteChatWpp">
+                <ScalarProperty Name="nombre_persona_escribe" ColumnName="nombre_persona_escribe" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="nombre_persona_llama" ColumnName="nombre_persona_llama" />
                 <ScalarProperty Name="telefono_saliente" ColumnName="telefono_saliente" />
                 <ScalarProperty Name="telefono_entrante" ColumnName="telefono_entrante" />
                 <ScalarProperty Name="respuesta" ColumnName="respuesta" />

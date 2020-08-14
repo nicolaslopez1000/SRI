@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SRI.Models;
+using SRI.Models.Enums;
 using SRI.Models.ViewModels;
 
 namespace SRI.Controllers
@@ -18,7 +19,7 @@ namespace SRI.Controllers
         // GET: IncidenteLlamado
         public ActionResult Index()
         {
-            return View(db.Incidentes.ToList());
+            return View(db.IncidentesLlamado.ToList());
         }
 
         // GET: IncidenteLlamado/Details/5
@@ -28,7 +29,7 @@ namespace SRI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IncidenteLlamado incidenteLlamado = db.Incidentes.Find(id);
+            IncidenteLlamado incidenteLlamado = db.IncidentesLlamado.Find(id);
             if (incidenteLlamado == null)
             {
                 return HttpNotFound();
@@ -45,7 +46,7 @@ namespace SRI.Controllers
         // POST: IncidenteLlamado/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,telefono_saliente,telefono_entrante,hora_inicio,hora_fin,nombre_persona_llama")] IncidenteLlamadoVM incidenteLlamadoVM)
+        public ActionResult CreateLlamado([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,telefono_saliente,telefono_entrante,hora_inicio,hora_fin,nombre_persona_llama")] IncidenteLlamadoVM incidenteLlamadoVM)
         {
 
             string email = User.Identity.Name;
@@ -68,11 +69,12 @@ namespace SRI.Controllers
                     incidenteLlamado.nombre_persona_llama = incidenteLlamadoVM.nombre_persona_llama;
                     incidenteLlamado.hora_fin = incidenteLlamadoVM.hora_fin;
                     incidenteLlamado.hora_inicio = incidenteLlamadoVM.hora_inicio;
+                    incidenteLlamado.tipo = (int)TipoIncidente.llamado;
 
 
                     if (ModelState.IsValid)
                     {
-                        context.Incidentes.Add(incidenteLlamado);
+                        context.IncidentesLlamado.Add(incidenteLlamado);
                         context.SaveChanges();
                         dbContextTransaction.Commit();
                         return RedirectToAction("Index");
@@ -91,7 +93,7 @@ namespace SRI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IncidenteLlamado incidenteLlamado = db.Incidentes.Find(id);
+            IncidenteLlamado incidenteLlamado = db.IncidentesLlamado.Find(id);
             if (incidenteLlamado == null)
             {
                 return HttpNotFound();
@@ -120,7 +122,7 @@ namespace SRI.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            IncidenteLlamado incidenteLlamado = db.Incidentes.Find(id);
+            IncidenteLlamado incidenteLlamado = db.IncidentesLlamado.Find(id);
             if (incidenteLlamado == null)
             {
                 return HttpNotFound();
@@ -133,8 +135,8 @@ namespace SRI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            IncidenteLlamado incidenteLlamado = db.Incidentes.Find(id);
-            db.Incidentes.Remove(incidenteLlamado);
+            IncidenteLlamado incidenteLlamado = db.IncidentesLlamado.Find(id);
+            db.IncidentesLlamado.Remove(incidenteLlamado);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

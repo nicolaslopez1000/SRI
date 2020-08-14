@@ -31,6 +31,10 @@ namespace SRI.Models
         public virtual DbSet<Incidente> Incidente { get; set; }
         public virtual DbSet<PalabraClave> PalabraClave { get; set; }
 
-        public System.Data.Entity.DbSet<SRI.Models.IncidenteLlamado> Incidentes { get; set; }
+        public System.Data.Entity.DbSet<SRI.Models.IncidenteLlamado> IncidentesLlamado { get; set; }
+        public System.Data.Entity.DbSet<SRI.Models.IncidenteChatWpp> IncidentesChatWpp { get; set; }
+        public System.Data.Entity.DbSet<SRI.Models.IncidenteMail> IncidentesMail { get; set; }
+
+
     }
 }

@@ -17,6 +17,6 @@ namespace SRI.Models
         public string respuesta { get; set; }
         public string telefono_entrante { get; set; }
         public string telefono_saliente { get; set; }
-        public string nombre_persona_llama { get; set; }
+        public string nombre_persona_escribe { get; set; }
     }
 }
