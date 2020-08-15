@@ -39,5 +39,44 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script>
+
+
+    var identificador = 0
+    var palabrasClave = []
+
+
+
+    function agregarPalabraClave() {
+
+        var val = $("#palabraClaveinput").val();
+        palabrasClave.push(val)
+        palabrasClaveJoin = palabrasClave.join()
+        $(".palabrasClaveEditor").val(palabrasClaveJoin)
+
+
+
+        $("#palabraClaveList").append('<div class="well">' + val + '<button type="button" style="float: right" class="btn btn - danger float - right remove" value="' + val + '">X</button></div>')
+
+        $("#palabraClaveinput").val("");
+
+    }
+
+      
+
+    $(document).on("click", "button.remove", function () {
+
+        $(this).parent().remove();
+        removeVal = $(this).val()
+        palabrasClave = palabrasClave.filter(e => e !== removeVal);
+        $(".palabrasClaveEditor").val(palabrasClave)
+
+
+    });
+
+
+
+
+    </script>
 </body>
 </html>

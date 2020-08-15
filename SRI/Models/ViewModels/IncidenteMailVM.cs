@@ -11,19 +11,39 @@ namespace SRI.Models.ViewModels
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class IncidenteMailVM : IncidenteVM
     {
         public IncidenteMailVM()
         {
             this.Destinatarios = new HashSet<Destinatarios>();
         }
-    
+
+        [Required(ErrorMessage = "Ingrese el asunto del mail")]
+        [Display(Name = "Asunto")]
         public string asunto { get; set; }
+
+        [Required(ErrorMessage = "Ingrese la respuesta del mail")]
+        [Display(Name = "Asunto")]
         public string respuesta { get; set; }
+
+        [Required(ErrorMessage = "Ingrese el contenido del mail")]
+        [Display(Name = "Contenido")]
         public string contenido { get; set; }
+
+        [Required(ErrorMessage = "Ingrese la respuesta del mail")]
+        [Display(Name = "Remitente")]
         public string remitente { get; set; }
-    
+
+        [Required(ErrorMessage = "Ingrese la respuesta del mail")]
+        [Display(Name = "Destinatarios To")]
+        public string destinatarioTo { get; set; }
+
+        [Required(ErrorMessage = "Ingrese la respuesta del mail")]
+        [Display(Name = "Destinatarios Cc")]
+        public string destinatarioCc { get; set; }
+
         public virtual ICollection<Destinatarios> Destinatarios { get; set; }
     }
 }

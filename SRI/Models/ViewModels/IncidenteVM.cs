@@ -44,7 +44,6 @@ namespace SRI.Models.ViewModels
         public string descripcion { get; set; }
 
         [Display(Name = "Tipo de incidente")]
-        [Required(ErrorMessage = "Seleccione el tipo de incidente")]
         public TipoIncidente tipo { get; set; }
 
         public virtual FuncionarioVM Funcionario { get; set; }

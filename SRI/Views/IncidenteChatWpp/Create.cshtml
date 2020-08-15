@@ -1,12 +1,22 @@
 ﻿@model SRI.Models.ViewModels.IncidenteChatWppVM
 
+@{
+    ViewBag.Title = "Crear incidente Chat Wpp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
 
 @using (Html.BeginForm("Create", "IncidenteChatWpp"))
 {
     @Html.AntiForgeryToken()
-        
+
     <div class="form-horizontal">
-        <h4>Incidente tipo Chat de WhatsApp</h4>
+        <h3>Incidente tipo Chat de WhatsApp</h3>
+        <br />
+
+
+        @Html.Partial("_PalabrasClave")
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -68,6 +78,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.palabrasClave, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.palabrasClave, new { htmlAttributes = new { @class = "form-control palabrasClaveEditor" } })
+                @Html.ValidationMessageFor(model => model.palabrasClave, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.nombre_persona_escribe, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.nombre_persona_escribe, new { htmlAttributes = new { @class = "form-control" } })
@@ -77,12 +95,17 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Crear" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
-    
-    
+
+<div>
+    @Html.ActionLink("Volver a el menú de selección", "Index", "Incidente")
+</div>
+
+
+
 
 

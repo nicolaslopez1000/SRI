@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using SRI.Helpers;
 using SRI.Models;
 using SRI.Models.ViewModels;
 
@@ -16,10 +17,24 @@ namespace SRI.Controllers
     {
         private db_SRI db = new db_SRI();
 
+        private IncidenteHelper ih = new IncidenteHelper();
+
         // GET: Incidente
         public ActionResult Index()
         {
-            return View(db.Incidente.ToList());
+
+            List<Incidente> listaIncidentes = db.Incidente.ToList();
+
+            List<IncidenteVM> listaIncidentesVM = new List<IncidenteVM>();
+
+            foreach ( Incidente incidente in listaIncidentes)
+            {
+                IncidenteVM incidenteVM = ih.IncidenteToViewModel(incidente);
+                listaIncidentesVM.Add(incidenteVM);
+            }
+
+
+            return View(listaIncidentesVM);
         }
 
         // GET: Incidente/Details/5

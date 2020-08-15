@@ -141,6 +141,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\FuncionarioHelper.cs" />
+    <Compile Include="Helpers\IncidenteHelper.cs" />
     <Compile Include="Helpers\ViewModelHelper.cs" />
     <Compile Include="Models\Destinatarios.cs">
       <DependentUpon>SRIModel.tt</DependentUpon>
@@ -376,6 +377,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Shared\_PalabrasClave.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

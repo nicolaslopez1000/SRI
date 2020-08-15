@@ -46,7 +46,7 @@ namespace SRI.Controllers
         // POST: IncidenteMail/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,tipo,asunto,respuesta,contenido,remitente")] IncidenteMailVM incidenteMailVM)
+        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,palabrasClave,resolucion,descripcion,tipo,asunto,respuesta,contenido,remitente")] IncidenteMailVM incidenteMailVM)
         {
             string email = User.Identity.Name;
 

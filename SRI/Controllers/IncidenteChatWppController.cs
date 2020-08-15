@@ -46,7 +46,7 @@ namespace SRI.Controllers
         // POST: IncidenteChatWpp/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,tipo,respuesta,telefono_entrante,telefono_saliente,nombre_persona_llama")] IncidenteChatWppVM incidenteChatWppVM)
+        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,tipo,respuesta,telefono_entrante,telefono_saliente,nombre_persona_llama,palabrasClave")] IncidenteChatWppVM incidenteChatWppVM)
         {
             string email = User.Identity.Name;
 
@@ -64,12 +64,27 @@ namespace SRI.Controllers
 
                     Funcionario funcionario = context.Funcionario.FirstOrDefault(a => a.mail.Equals(email));
                     incidenteChatWpp.Funcionario = funcionario;
-                    
+
+
                     incidenteChatWpp.tipo = (int)TipoIncidente.chatWpp;
                     incidenteChatWpp.telefono_entrante = incidenteChatWppVM.telefono_entrante;
                     incidenteChatWpp.telefono_saliente = incidenteChatWppVM.telefono_saliente;
                     incidenteChatWpp.nombre_persona_escribe = incidenteChatWppVM.nombre_persona_escribe;
                     incidenteChatWpp.respuesta = incidenteChatWppVM.respuesta;
+
+                    string palabrasClave = incidenteChatWppVM.palabrasClave;
+
+                    string[] palabrasStringList = palabrasClave.Split(',');
+
+                    foreach ( string palabra in palabrasStringList)
+                    {
+
+                        PalabraClave pc = new PalabraClave();
+                        pc.valor = palabra;
+                        incidenteChatWpp.PalabraClave.Add(pc);
+
+                    }
+
 
                     //falta agregar lista de destinatarios ,cc y to
 
@@ -81,6 +96,11 @@ namespace SRI.Controllers
                         dbContextTransaction.Commit();
                         return RedirectToAction("Index");
                     }
+
+
+
+
+
 
                 }
             }

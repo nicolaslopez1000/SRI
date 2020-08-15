@@ -11,12 +11,23 @@ namespace SRI.Models.ViewModels
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class IncidenteChatWppVM : IncidenteVM
     {
+        [Display(Name = "Respuesta")]
+        [Required(ErrorMessage = "Ingrese la respuesta")]
         public string respuesta { get; set; }
+
+        [Display(Name = "Telefono entrante")]
+        [Required(ErrorMessage = "Ingrese el teléfono entrante")]
         public string telefono_entrante { get; set; }
+        [Display(Name = "Teléfono entrante")]
+        [Required(ErrorMessage = "Ingrese el teléfono saliente")]
         public string telefono_saliente { get; set; }
+
+        [Display(Name = "Nombre de persona que escribe")]
+        [Required(ErrorMessage = "Ingrese el nombre de la persona que escribe")]
         public string nombre_persona_escribe { get; set; }
     }
 }

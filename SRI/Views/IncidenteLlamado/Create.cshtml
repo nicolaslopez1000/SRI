@@ -1,13 +1,22 @@
 ﻿@model SRI.Models.ViewModels.IncidenteLlamadoVM
 
+@{
+    ViewBag.Title = "Crear incidente llamado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 
-@using (Html.BeginForm("Create","IncidenteLlamado")) 
+
+@using (Html.BeginForm("Create", "IncidenteLlamado"))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Incidente de Llamado</h4>
+        <h3>Incidente de Llamado</h3>
+        <br />
+
+
+        @Html.Partial("_PalabrasClave")
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -41,6 +50,17 @@
                 @Html.ValidationMessageFor(model => model.resolucion, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.palabrasClave, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.palabrasClave, new { htmlAttributes = new { @class = "form-control palabrasClaveEditor" } })
+                @Html.ValidationMessageFor(model => model.palabrasClave, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
 
 
         <div class="form-group">
@@ -92,5 +112,6 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Volver a el menú de selección", "Index", "Incidente")
 </div>
+

@@ -1,12 +1,21 @@
 ﻿@model SRI.Models.ViewModels.IncidenteMailVM
 
+@{
+    ViewBag.Title = "Crear incidente Mail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
 
 @using (Html.BeginForm("Create", "IncidenteMail"))
 {
     @Html.AntiForgeryToken()
-        
+
     <div class="form-horizontal">
-        <h4>Incidente tipo Mail</h4>
+        <h3>Incidente tipo Mail</h3>
+        <br />
+
+        @Html.Partial("_PalabrasClave")
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -38,6 +47,14 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.resolucion, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.resolucion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.palabrasClave, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.palabrasClave, new { htmlAttributes = new { @class = "form-control palabrasClaveEditor" } })
+                @Html.ValidationMessageFor(model => model.palabrasClave, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -76,11 +93,122 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.destinatarioCc, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.destinatarioCc, new { htmlAttributes = new { @class = "form-control destinatarioCcEditor" } })
+                @Html.ValidationMessageFor(model => model.destinatarioCc, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.destinatarioTo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.destinatarioTo, new { htmlAttributes = new { @class = "form-control destinatarioToEditor" } })
+                @Html.ValidationMessageFor(model => model.destinatarioTo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div>
+
+            <h4> Destinatarios</h4>
+
+            <input type="text" id="destinatariosInput" />
+
+            <button class="btn btn-outline-secondary" onclick="agregarDestinatarioTo()" type="button">Agregar To</button>
+
+            <button class="btn btn-outline-secondary" onclick="agregarDestinatarioCc()" type="button">Agregar Cc</button>
+
+
+            <br />
+            <br />
+
+            <div class="list-group col-md-6 destinatariosToList">
+                <h4>To</h4>
+            </div>
+
+            
+            <div class="list-group  col-md-6 destinatariosCcList">
+                <h4>Cc</h4>
+            </div>
+
+        </div>
+
+
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Crear" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
-    
-   
+
+
+
+@section Scripts{
+    <script>
+
+        var destinatariosCc = []
+        var destinatariosTo = []
+
+
+
+        function agregarDestinatarioTo() {
+
+            var val = $("#destinatariosInput").val();
+
+            destinatariosTo.push(val)
+
+            var destinatariosToJoin = destinatariosTo.join()
+
+            $(".destinatarioToEditor").val(destinatariosToJoin)
+
+            $(".destinatariosToList").append('<div class="well">' + val + '<button type="button" style="float: right" class="btn btn - danger float - right removeTo" value="' + val + '">X</button></div>')
+
+            $("#destinatariosInput").val("");
+
+        }
+
+        function agregarDestinatarioCc() {
+
+            var val = $("#destinatariosInput").val();
+            destinatariosCc.push(val)
+            var destinatariosCcJoin = destinatariosCc.join()
+            $(".destinatarioCcEditor").val(destinatariosCcJoin)
+
+
+
+            $(".destinatariosCcList").append('<div class="well">' + val + '<button type="button" style="float: right" class="btn btn - danger float - right removeCc" value="' + val + '">X</button></div>')
+
+            $("#destinatariosInput").val("");
+
+        }
+
+
+        
+        $(document).on("click", "button.removeTo", function () {
+
+            $(this).parent().remove();
+            removeVal = $(this).val()
+            destinatariosTo = destinatariosTo.filter(e => e !== removeVal);
+            $(".destinatarioToEditor").val(destinatariosTo)
+
+
+        });
+
+        $(document).on("click", "button.removeCc", function () {
+
+            $(this).parent().remove();
+            removeVal = $(this).val()
+            destinatariosCc = destinatariosCc.filter(e => e !== removeVal);
+            $(".destinatarioCcEditor").val(destinatariosCc)
+
+
+        });
+
+    </script>
+}
+
+<div>
+    @Html.ActionLink("Volver a el menú de selección", "Index", "Incidente")
+</div>
+
