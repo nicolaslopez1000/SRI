@@ -12,6 +12,7 @@ using SRI.Models.ViewModels;
 
 namespace SRI.Controllers
 {
+    [Authorize]
     public class IncidenteChatWppController : Controller
     {
         private db_SRI db = new db_SRI();
@@ -56,24 +57,24 @@ namespace SRI.Controllers
                 {
                     IncidenteChatWpp incidenteChatWpp = new IncidenteChatWpp();
 
-                    incidenteChatWpp.fecha_suceso = incidenteChatWppVM.fecha_suceso;
+                    incidenteChatWpp.fecha_suceso =  incidenteChatWppVM.fecha_suceso;
                     incidenteChatWpp.fecha_creacion = DateTime.Now;
                     incidenteChatWpp.resolucion = incidenteChatWppVM.resolucion;
                     incidenteChatWpp.emocion = (int)incidenteChatWppVM.emocion;
                     incidenteChatWpp.descripcion = incidenteChatWppVM.descripcion;
+                    incidenteChatWpp.tipo = (int)TipoIncidente.chatWpp;
 
                     Funcionario funcionario = context.Funcionario.FirstOrDefault(a => a.mail.Equals(email));
                     incidenteChatWpp.Funcionario = funcionario;
 
 
-                    incidenteChatWpp.tipo = (int)TipoIncidente.chatWpp;
                     incidenteChatWpp.telefono_entrante = incidenteChatWppVM.telefono_entrante;
                     incidenteChatWpp.telefono_saliente = incidenteChatWppVM.telefono_saliente;
                     incidenteChatWpp.nombre_persona_escribe = incidenteChatWppVM.nombre_persona_escribe;
                     incidenteChatWpp.respuesta = incidenteChatWppVM.respuesta;
 
-                    string palabrasClave = incidenteChatWppVM.palabrasClave;
 
+                    string palabrasClave = incidenteChatWppVM.palabrasClave;
                     string[] palabrasStringList = palabrasClave.Split(',');
 
                     foreach ( string palabra in palabrasStringList)

@@ -52,7 +52,7 @@
             @Html.DisplayNameFor(model => model.resolucion)
         </th>
         <th>
-            Nombre del funcionario
+            Funcionario
         </th>
         <th></th>
     </tr>
@@ -79,7 +79,7 @@
                 @Html.DisplayFor(modelItem => item.resolucion)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Funcionario.nombre)
+                @Html.DisplayFor(modelItem => item.Funcionario.ci)   @Html.DisplayFor(modelItem => item.Funcionario.nombre)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

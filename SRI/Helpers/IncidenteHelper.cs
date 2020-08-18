@@ -32,13 +32,7 @@ namespace SRI.Helpers
 
 
             }
-            incidenteVM.Funcionario = new FuncionarioVM();
-            incidenteVM.Funcionario.ci = incidente.Funcionario.ci;
-            incidenteVM.Funcionario.nombre = incidente.Funcionario.nombre; 
-            incidenteVM.Funcionario.mail = incidente.Funcionario.mail;
-            incidenteVM.Funcionario.apellido = incidente.Funcionario.apellido;
-            incidenteVM.Funcionario.celular = incidente.Funcionario.celular;
-
+            incidenteVM.Funcionario = (FuncionarioVM)incidente.Funcionario;
 
             return incidenteVM;
 

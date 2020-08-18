@@ -12,6 +12,7 @@ using SRI.Models.ViewModels;
 
 namespace SRI.Controllers
 {
+    [Authorize]
     public class IncidenteMailController : Controller
     {
         private db_SRI db = new db_SRI();
@@ -46,7 +47,7 @@ namespace SRI.Controllers
         // POST: IncidenteMail/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,palabrasClave,resolucion,descripcion,tipo,asunto,respuesta,contenido,remitente")] IncidenteMailVM incidenteMailVM)
+        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,palabrasClave,resolucion,descripcion,tipo,asunto,respuesta,contenido,remitente,destinatarioCc,destinatarioTo")] IncidenteMailVM incidenteMailVM)
         {
             string email = User.Identity.Name;
 
@@ -61,15 +62,53 @@ namespace SRI.Controllers
                     incidenteMail.resolucion = incidenteMailVM.resolucion;
                     incidenteMail.emocion = (int)incidenteMailVM.emocion;
                     incidenteMail.descripcion = incidenteMailVM.descripcion;
+                    incidenteMail.tipo = (int)TipoIncidente.mail;
 
                     Funcionario funcionario = context.Funcionario.FirstOrDefault(a => a.mail.Equals(email));
                     incidenteMail.Funcionario = funcionario;
 
-                    incidenteMail.tipo = (int)TipoIncidente.mail;
                     incidenteMail.asunto = incidenteMailVM.asunto;
                     incidenteMail.respuesta = incidenteMailVM.respuesta;
                     incidenteMail.contenido = incidenteMailVM.contenido;
                     incidenteMail.remitente = incidenteMailVM.remitente;
+
+                    string palabrasClave = incidenteMailVM.palabrasClave;
+                    string[] palabrasStringList = palabrasClave.Split(',');
+
+                    foreach (string palabra in palabrasStringList)
+                    {
+
+                        PalabraClave pc = new PalabraClave();
+                        pc.valor = palabra;
+                        incidenteMail.PalabraClave.Add(pc);
+
+                    }
+
+                    string destinatariosCc = incidenteMailVM.destinatarioCc;
+                    string[] destinatariosCcList = palabrasClave.Split(',');
+
+                    foreach (string destinatarioCc in destinatariosCcList)
+                    {
+
+                        Destinatarios dc = new Destinatarios();
+                        dc.tipo = (int)TipoEmail.cc;
+                        dc.valor = destinatarioCc;
+                        incidenteMail.Destinatarios.Add(dc);
+
+                    }
+
+                    string destinatariosTo = incidenteMailVM.destinatarioTo;
+                    string[] destinatariosToList = palabrasClave.Split(',');
+
+                    foreach (string destinatarioTo in destinatariosToList)
+                    {
+
+                        Destinatarios dc = new Destinatarios();
+                        dc.tipo = (int)TipoEmail.to;
+                        dc.valor = destinatarioTo;
+                        incidenteMail.Destinatarios.Add(dc);
+
+                    }
 
                     //falta agregar lista de destinatarios ,cc y to
 

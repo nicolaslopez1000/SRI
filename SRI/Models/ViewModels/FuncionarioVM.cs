@@ -45,8 +45,27 @@ namespace SRI.Models.ViewModels
         [Required(ErrorMessage = "Ingrese su contraseña")]
         public string password { get; set; }
 
-        [Display(Name = "Horario")]
-        public virtual HorarioVM Horario { get; set; }
+        public virtual Int32 horario_id { get; set; }
 
+        [Display(Name = "Horario")]
+        public string horario_string { get; set; }
+        public Rol rol { get; set; }
+
+        public static explicit operator FuncionarioVM(Funcionario v)
+        {
+            FuncionarioVM funcionarioVM = new FuncionarioVM();
+
+            funcionarioVM.nombre = v.nombre;
+            funcionarioVM.apellido = v.apellido;
+            funcionarioVM.celular = v.celular;
+            funcionarioVM.ci = v.ci;
+            funcionarioVM.mail = v.mail;
+            funcionarioVM.password = v.password;
+            funcionarioVM.rol = (Rol)v.rol;
+            funcionarioVM.horario_id = v.Horario.Id;
+            funcionarioVM.horario_string = v.Horario.hora_inicio.ToString("HH:mm") + " - " + v.Horario.hora_fin.ToString("HH:mm");
+
+            return funcionarioVM;
+        }
     }
 }

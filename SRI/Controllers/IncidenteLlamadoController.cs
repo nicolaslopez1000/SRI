@@ -12,6 +12,7 @@ using SRI.Models.ViewModels;
 
 namespace SRI.Controllers
 {
+    [Authorize]
     public class IncidenteLlamadoController : Controller
     {
         private db_SRI db = new db_SRI();
@@ -60,6 +61,9 @@ namespace SRI.Controllers
                     incidenteLlamado.fecha_suceso = incidenteLlamadoVM.fecha_suceso;
                     incidenteLlamado.fecha_creacion = DateTime.Now;
                     incidenteLlamado.resolucion = incidenteLlamadoVM.resolucion;
+                    incidenteLlamado.emocion = (int)incidenteLlamadoVM.emocion;
+                    incidenteLlamado.descripcion = incidenteLlamadoVM.descripcion;
+                    incidenteLlamado.tipo = (int)TipoIncidente.llamado;
 
                     Funcionario funcionario = context.Funcionario.FirstOrDefault(a => a.mail.Equals(email));
                     incidenteLlamado.Funcionario = funcionario;
@@ -69,7 +73,20 @@ namespace SRI.Controllers
                     incidenteLlamado.nombre_persona_llama = incidenteLlamadoVM.nombre_persona_llama;
                     incidenteLlamado.hora_fin = incidenteLlamadoVM.hora_fin;
                     incidenteLlamado.hora_inicio = incidenteLlamadoVM.hora_inicio;
-                    incidenteLlamado.tipo = (int)TipoIncidente.llamado;
+                    
+
+
+                    string palabrasClave = incidenteLlamadoVM.palabrasClave;
+                    string[] palabrasStringList = palabrasClave.Split(',');
+
+                    foreach (string palabra in palabrasStringList)
+                    {
+
+                        PalabraClave pc = new PalabraClave();
+                        pc.valor = palabra;
+                        incidenteLlamado.PalabraClave.Add(pc);
+
+                    }
 
 
                     if (ModelState.IsValid)

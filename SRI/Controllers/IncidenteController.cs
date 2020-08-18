@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using SRI.Helpers;
 using SRI.Models;
+using SRI.Models.Enums;
 using SRI.Models.ViewModels;
 
 namespace SRI.Controllers
@@ -45,10 +46,26 @@ namespace SRI.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Incidente incidente = db.Incidente.Find(id);
+
             if (incidente == null)
             {
                 return HttpNotFound();
             }
+
+            switch (incidente.tipo)
+            {
+                case (int)TipoIncidente.chatWpp:
+                    return RedirectToAction("Details", "IncidenteChatWpp", new { id = id }); ;
+                case (int)TipoIncidente.llamado:
+                    return RedirectToAction("Details", "IncidenteLlamado", new { id = id }); ;
+                case (int)TipoIncidente.mail:
+                    return RedirectToAction("Details", "IncidenteMail", new { id = id }); ;
+
+                default:
+                    break;
+            }
+
+            
             return View(incidente);
         }
 

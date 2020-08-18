@@ -21,7 +21,7 @@ namespace SRI.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Incidente");
             }
 
             return View();

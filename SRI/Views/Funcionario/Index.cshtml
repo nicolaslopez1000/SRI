@@ -1,0 +1,72 @@
+﻿@model IEnumerable<SRI.Models.Funcionario>
+
+@{
+    ViewBag.Title = "Listado de funcionarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.celular)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.password)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.rol)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Horario.hora_inicio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Horario.hora_fin)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.nombre)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.mail)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.celular)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.password)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.rol)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Horario.hora_inicio)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Horario.hora_fin)
+    </td>
+
+
+    <td>
+        @Html.ActionLink("Editar", "Edit", new { id = item.ci }) |
+        @Html.ActionLink("Detalles", "Details", new { id = item.ci }) |
+        @Html.ActionLink("Eliminar", "Delete", new { id = item.ci })
+    </td>
+</tr>
+}
+
+</table>
