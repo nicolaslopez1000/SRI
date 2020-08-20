@@ -9,6 +9,7 @@
 
 namespace SRI.Models.ViewModels
 {
+    using SRI.Models.Enums;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -39,5 +40,27 @@ namespace SRI.Models.ViewModels
         [Required(ErrorMessage = "Ingrese el nombre de la persona que llama")]
         [Display(Name = "Nombre persona que llama")]
         public string nombre_persona_llama { get; set; }
+
+        public static explicit operator IncidenteLlamadoVM(IncidenteLlamado incidenteLlamado)
+        {
+            IncidenteLlamadoVM incidenteLlamadoVM = new IncidenteLlamadoVM();
+
+            incidenteLlamadoVM.fecha_suceso = incidenteLlamado.fecha_suceso;
+            incidenteLlamadoVM.fecha_creacion = incidenteLlamado.fecha_creacion;
+            incidenteLlamadoVM.resolucion = incidenteLlamado.resolucion;
+            incidenteLlamadoVM.emocion = (Emocion)incidenteLlamado.emocion;
+            incidenteLlamadoVM.descripcion = incidenteLlamado.descripcion;
+            incidenteLlamadoVM.tipo = (TipoIncidente)incidenteLlamado.tipo;
+            incidenteLlamadoVM.Funcionario = (FuncionarioVM)incidenteLlamado.Funcionario;
+
+            incidenteLlamadoVM.telefono_entrante = incidenteLlamado.telefono_entrante;
+            incidenteLlamadoVM.telefono_saliente = incidenteLlamado.telefono_saliente;
+            incidenteLlamadoVM.hora_inicio = incidenteLlamado.hora_inicio;
+            incidenteLlamadoVM.hora_fin = incidenteLlamado.hora_fin;
+            incidenteLlamadoVM.nombre_persona_llama = incidenteLlamado.nombre_persona_llama;
+
+
+            return incidenteLlamadoVM;
+        }
     }
 }

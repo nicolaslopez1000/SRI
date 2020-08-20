@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SRI.Models.Funcionario>
+﻿@model IEnumerable<SRI.Models.ViewModels.FuncionarioVM>
 
 @{
     ViewBag.Title = "Listado de funcionarios";
@@ -28,12 +28,8 @@
             @Html.DisplayNameFor(model => model.rol)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Horario.hora_inicio)
+            @Html.DisplayNameFor(model => model.horario_string)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Horario.hora_fin)
-        </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -54,10 +50,7 @@
         @Html.DisplayFor(modelItem => item.rol)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.Horario.hora_inicio)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Horario.hora_fin)
+        @Html.DisplayFor(modelItem => item.horario_string)
     </td>
 
 

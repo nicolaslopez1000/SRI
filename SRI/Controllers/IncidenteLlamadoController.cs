@@ -35,7 +35,9 @@ namespace SRI.Controllers
             {
                 return HttpNotFound();
             }
-            return View(incidenteLlamado);
+
+            IncidenteLlamadoVM incidenteLlamadoVM = (IncidenteLlamadoVM)incidenteLlamado;
+            return View(incidenteLlamadoVM);
         }
 
         // GET: IncidenteLlamado/Create
@@ -73,20 +75,9 @@ namespace SRI.Controllers
                     incidenteLlamado.nombre_persona_llama = incidenteLlamadoVM.nombre_persona_llama;
                     incidenteLlamado.hora_fin = incidenteLlamadoVM.hora_fin;
                     incidenteLlamado.hora_inicio = incidenteLlamadoVM.hora_inicio;
-                    
 
 
-                    string palabrasClave = incidenteLlamadoVM.palabrasClave;
-                    string[] palabrasStringList = palabrasClave.Split(',');
-
-                    foreach (string palabra in palabrasStringList)
-                    {
-
-                        PalabraClave pc = new PalabraClave();
-                        pc.valor = palabra;
-                        incidenteLlamado.PalabraClave.Add(pc);
-
-                    }
+                    incidenteLlamado.palabras_clave = incidenteLlamadoVM.palabrasClave;                  
 
 
                     if (ModelState.IsValid)
@@ -115,6 +106,9 @@ namespace SRI.Controllers
             {
                 return HttpNotFound();
             }
+
+            IncidenteLlamadoVM incidenteLlamadoVM = (IncidenteLlamadoVM)incidenteLlamado;
+
             return View(incidenteLlamado);
         }
 

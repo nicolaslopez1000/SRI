@@ -31,11 +31,15 @@ namespace SRI.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             IncidenteChatWpp incidenteChatWpp = db.IncidentesChatWpp.Find(id);
+                
             if (incidenteChatWpp == null)
             {
                 return HttpNotFound();
             }
-            return View(incidenteChatWpp);
+
+            IncidenteChatWppVM incidenteChatWppVM = (IncidenteChatWppVM)incidenteChatWpp;
+
+            return View(incidenteChatWppVM);
         }
 
         // GET: IncidenteChatWpp/Create
@@ -74,20 +78,7 @@ namespace SRI.Controllers
                     incidenteChatWpp.respuesta = incidenteChatWppVM.respuesta;
 
 
-                    string palabrasClave = incidenteChatWppVM.palabrasClave;
-                    string[] palabrasStringList = palabrasClave.Split(',');
-
-                    foreach ( string palabra in palabrasStringList)
-                    {
-
-                        PalabraClave pc = new PalabraClave();
-                        pc.valor = palabra;
-                        incidenteChatWpp.PalabraClave.Add(pc);
-
-                    }
-
-
-                    //falta agregar lista de destinatarios ,cc y to
+                    incidenteChatWpp.palabras_clave = incidenteChatWppVM.palabrasClave;
 
 
                     if (ModelState.IsValid)
@@ -97,10 +88,6 @@ namespace SRI.Controllers
                         dbContextTransaction.Commit();
                         return RedirectToAction("Index");
                     }
-
-
-
-
 
 
                 }
@@ -117,11 +104,16 @@ namespace SRI.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             IncidenteChatWpp incidenteChatWpp = db.IncidentesChatWpp.Find(id);
+
+
             if (incidenteChatWpp == null)
             {
                 return HttpNotFound();
             }
-            return View(incidenteChatWpp);
+
+            IncidenteChatWppVM incidenteChatWppVM = (IncidenteChatWppVM)incidenteChatWpp;
+
+            return View(incidenteChatWppVM);
         }
 
         // POST: IncidenteChatWpp/Edit/5

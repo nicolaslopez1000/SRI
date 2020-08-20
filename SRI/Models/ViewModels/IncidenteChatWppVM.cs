@@ -9,6 +9,7 @@
 
 namespace SRI.Models.ViewModels
 {
+    using SRI.Models.Enums;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -29,5 +30,26 @@ namespace SRI.Models.ViewModels
         [Display(Name = "Nombre de persona que escribe")]
         [Required(ErrorMessage = "Ingrese el nombre de la persona que escribe")]
         public string nombre_persona_escribe { get; set; }
+
+        public static explicit operator IncidenteChatWppVM(IncidenteChatWpp incidenteChatWpp)
+        {
+            IncidenteChatWppVM incidenteChatWppVM = new IncidenteChatWppVM();
+
+            incidenteChatWppVM.fecha_suceso = incidenteChatWpp.fecha_suceso;
+            incidenteChatWppVM.fecha_creacion = incidenteChatWpp.fecha_creacion;
+            incidenteChatWppVM.resolucion = incidenteChatWpp.resolucion;
+            incidenteChatWppVM.emocion = (Emocion)incidenteChatWpp.emocion;
+            incidenteChatWppVM.descripcion = incidenteChatWpp.descripcion;
+            incidenteChatWppVM.tipo = (TipoIncidente)incidenteChatWpp.tipo;
+            incidenteChatWppVM.Funcionario = (FuncionarioVM)incidenteChatWpp.Funcionario;
+
+
+            incidenteChatWppVM.telefono_entrante = incidenteChatWpp.telefono_entrante;
+            incidenteChatWppVM.telefono_saliente = incidenteChatWpp.telefono_saliente;
+            incidenteChatWppVM.nombre_persona_escribe = incidenteChatWpp.nombre_persona_escribe;
+            incidenteChatWppVM.respuesta = incidenteChatWpp.respuesta;
+
+            return incidenteChatWppVM;
+        }
     }
 }

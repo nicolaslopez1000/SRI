@@ -49,8 +49,8 @@ namespace SRI.Controllers
                     Session["FuncionarioCi"] = obj.ci.ToString();
                     Session["FuncionarioMail"] = obj.mail.ToString();
                     Session["IsAdmin"] = obj.rol;
-                    Session["CurrUser"] = obj;
-                    return RedirectToAction("Index", "Home");
+                    Session["CurrUser"] = (FuncionarioVM)obj;
+                    return RedirectToAction("Index", "Incidente");
                 }
                 else
                 {

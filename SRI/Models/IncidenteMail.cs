@@ -14,18 +14,11 @@ namespace SRI.Models
     
     public partial class IncidenteMail : Incidente
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public IncidenteMail()
-        {
-            this.Destinatarios = new HashSet<Destinatarios>();
-        }
-    
         public string asunto { get; set; }
         public string respuesta { get; set; }
         public string contenido { get; set; }
         public string remitente { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Destinatarios> Destinatarios { get; set; }
+        public string destinatariosCc { get; set; }
+        public string destinatariosTo { get; set; }
     }
 }

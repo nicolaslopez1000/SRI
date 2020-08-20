@@ -16,10 +16,6 @@ namespace SRI.Models.ViewModels
 
     public partial class IncidenteVM
     {
-        public IncidenteVM()
-        {
-            this.PalabraClave = new List<PalabraClaveVM>();
-        }
     
         public int Id { get; set; }
         public string palabrasClave { get; set; }
@@ -48,6 +44,5 @@ namespace SRI.Models.ViewModels
 
         public virtual FuncionarioVM Funcionario { get; set; }
 
-        public virtual List<PalabraClaveVM> PalabraClave { get; set; }
     }
 }

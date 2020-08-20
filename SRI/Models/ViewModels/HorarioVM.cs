@@ -11,13 +11,31 @@ namespace SRI.Models.ViewModels
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class HorarioVM
     {
     
         public int Id { get; set; }
+
+        [Display(Name = "Hora inicio")]
+        [DataType(DataType.Time)]
         public System.DateTime hora_inicio { get; set; }
+        [Display(Name = "Hora fin")]
+        [DataType(DataType.Time)]
         public System.DateTime hora_fin { get; set; }
-    
+
+        public static explicit operator HorarioVM(Horario v)
+        {
+
+            HorarioVM horarioVM = new HorarioVM();
+
+            horarioVM.hora_inicio = v.hora_inicio;
+            horarioVM.hora_fin = v.hora_fin;
+            horarioVM.Id = v.Id;
+
+            return horarioVM;
+
+        }
     }
 }

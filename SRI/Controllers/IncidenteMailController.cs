@@ -35,6 +35,8 @@ namespace SRI.Controllers
             {
                 return HttpNotFound();
             }
+            IncidenteMailVM incidenteMailVM = (IncidenteMailVM)incidenteMail;
+
             return View(incidenteMail);
         }
 
@@ -72,45 +74,9 @@ namespace SRI.Controllers
                     incidenteMail.contenido = incidenteMailVM.contenido;
                     incidenteMail.remitente = incidenteMailVM.remitente;
 
-                    string palabrasClave = incidenteMailVM.palabrasClave;
-                    string[] palabrasStringList = palabrasClave.Split(',');
-
-                    foreach (string palabra in palabrasStringList)
-                    {
-
-                        PalabraClave pc = new PalabraClave();
-                        pc.valor = palabra;
-                        incidenteMail.PalabraClave.Add(pc);
-
-                    }
-
-                    string destinatariosCc = incidenteMailVM.destinatarioCc;
-                    string[] destinatariosCcList = palabrasClave.Split(',');
-
-                    foreach (string destinatarioCc in destinatariosCcList)
-                    {
-
-                        Destinatarios dc = new Destinatarios();
-                        dc.tipo = (int)TipoEmail.cc;
-                        dc.valor = destinatarioCc;
-                        incidenteMail.Destinatarios.Add(dc);
-
-                    }
-
-                    string destinatariosTo = incidenteMailVM.destinatarioTo;
-                    string[] destinatariosToList = palabrasClave.Split(',');
-
-                    foreach (string destinatarioTo in destinatariosToList)
-                    {
-
-                        Destinatarios dc = new Destinatarios();
-                        dc.tipo = (int)TipoEmail.to;
-                        dc.valor = destinatarioTo;
-                        incidenteMail.Destinatarios.Add(dc);
-
-                    }
-
-                    //falta agregar lista de destinatarios ,cc y to
+                    incidenteMail.palabras_clave = incidenteMailVM.palabrasClave;
+                    incidenteMail. destinatariosCc = incidenteMailVM.destinatarioCc;
+                    incidenteMail.destinatariosTo = incidenteMailVM.destinatarioTo;
 
 
                     if (ModelState.IsValid)

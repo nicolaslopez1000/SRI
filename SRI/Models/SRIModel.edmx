@@ -5,15 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="db_SRI_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Destinatarios">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="valor" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="tipo" Type="int" Nullable="false" />
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IncidenteMail_Id" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Funcionario">
           <Key>
             <PropertyRef Name="ci" />
@@ -35,6 +26,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="hora_inicio" Type="datetime" Nullable="false" />
           <Property Name="hora_fin" Type="datetime" Nullable="false" />
+          <Property Name="is_eliminado" Type="bit" />
         </EntityType>
         <EntityType Name="Incidente">
           <Key>
@@ -47,7 +39,9 @@
           <Property Name="Funcionario_ci" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="resolucion" Type="nvarchar" MaxLength="50" />
           <Property Name="descripcion" Type="nvarchar" MaxLength="200" />
+          <Property Name="palabras_clave" Type="nvarchar(max)" />
           <Property Name="tipo" Type="int" Nullable="false" />
+          <Property Name="is_eliminado" Type="bit" />
         </EntityType>
         <EntityType Name="IncidenteChatWpp">
           <Key>
@@ -75,18 +69,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="asunto" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="respuesta" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="respuesta" Type="nvarchar(max)" />
           <Property Name="contenido" Type="nvarchar(max)" Nullable="false" />
           <Property Name="remitente" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="destinatariosCc" Type="nvarchar(max)" />
+          <Property Name="destinatariosTo" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PalabraClave">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="valor" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Incidente_Id" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_FuncionarioIncidente">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1" />
@@ -154,39 +142,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_IncidenteMailDestinatarios">
-          <End Role="IncidenteMail" Type="Self.IncidenteMail" Multiplicity="1" />
-          <End Role="Destinatarios" Type="Self.Destinatarios" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="IncidenteMail">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Destinatarios">
-              <PropertyRef Name="IncidenteMail_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IncidentePalabraClave">
-          <End Role="Incidente" Type="Self.Incidente" Multiplicity="1" />
-          <End Role="PalabraClave" Type="Self.PalabraClave" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Incidente">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="PalabraClave">
-              <PropertyRef Name="Incidente_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="db_SRI_ModelStoreContainer">
-          <EntitySet Name="Destinatarios" EntityType="Self.Destinatarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Funcionario" EntityType="Self.Funcionario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Horario" EntityType="Self.Horario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Incidente" EntityType="Self.Incidente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncidenteChatWpp" EntityType="Self.IncidenteChatWpp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncidenteLlamado" EntityType="Self.IncidenteLlamado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncidenteMail" EntityType="Self.IncidenteMail" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PalabraClave" EntityType="Self.PalabraClave" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_FuncionarioIncidente" Association="Self.FK_FuncionarioIncidente">
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Incidente" EntitySet="Incidente" />
@@ -207,28 +169,11 @@
             <End Role="Incidente" EntitySet="Incidente" />
             <End Role="IncidenteMail" EntitySet="IncidenteMail" />
           </AssociationSet>
-          <AssociationSet Name="FK_IncidenteMailDestinatarios" Association="Self.FK_IncidenteMailDestinatarios">
-            <End Role="IncidenteMail" EntitySet="IncidenteMail" />
-            <End Role="Destinatarios" EntitySet="Destinatarios" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IncidentePalabraClave" Association="Self.FK_IncidentePalabraClave">
-            <End Role="Incidente" EntitySet="Incidente" />
-            <End Role="PalabraClave" EntitySet="PalabraClave" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="db_SRI_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Destinatarios">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="valor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="tipo" Type="Int32" Nullable="false" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="IncidenteMail" Relationship="Self.FK_IncidenteMailDestinatarios" FromRole="Destinatarios" ToRole="IncidenteMail" />
-        </EntityType>
         <EntityType Name="Funcionario">
           <Key>
             <PropertyRef Name="ci" />
@@ -252,6 +197,7 @@
           <Property Name="hora_inicio" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="hora_fin" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Funcionario" Relationship="Self.FK_HorarioFuncionario" FromRole="Horario" ToRole="Funcionario" />
+          <Property Name="is_eliminado" Type="Boolean" />
         </EntityType>
         <EntityType Name="Incidente">
           <Key>
@@ -263,9 +209,10 @@
           <Property Name="emocion" Type="Int32" Nullable="false" />
           <Property Name="resolucion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Funcionario" Relationship="Self.FK_FuncionarioIncidente" FromRole="Incidente" ToRole="Funcionario" />
-          <NavigationProperty Name="PalabraClave" Relationship="Self.FK_IncidentePalabraClave" FromRole="Incidente" ToRole="PalabraClave" />
           <Property Name="descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="tipo" Type="Int32" Nullable="false" />
+          <Property Name="palabras_clave" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="is_eliminado" Type="Boolean" />
         </EntityType>
         <EntityType Name="IncidenteChatWpp" BaseType="db_SRI_Model.Incidente">
           <Property Name="respuesta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -282,23 +229,12 @@
         </EntityType>
         <EntityType Name="IncidenteMail" BaseType="db_SRI_Model.Incidente">
           <Property Name="asunto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="respuesta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="respuesta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="contenido" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="remitente" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Destinatarios" Relationship="Self.FK_IncidenteMailDestinatarios" FromRole="IncidenteMail" ToRole="Destinatarios" />
+          <Property Name="destinatariosCc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="destinatariosTo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="PalabraClave">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="valor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Incidente" Relationship="Self.FK_IncidentePalabraClave" FromRole="PalabraClave" ToRole="Incidente" />
-        </EntityType>
-        <Association Name="FK_IncidenteMailDestinatarios">
-          <End Role="IncidenteMail" Type="Self.IncidenteMail" Multiplicity="1" />
-          <End Role="Destinatarios" Type="Self.Destinatarios" Multiplicity="*" />
-        </Association>
         <Association Name="FK_FuncionarioIncidente">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1" />
           <End Role="Incidente" Type="Self.Incidente" Multiplicity="*" />
@@ -307,20 +243,10 @@
           <End Role="Horario" Type="Self.Horario" Multiplicity="1" />
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="*" />
         </Association>
-        <Association Name="FK_IncidentePalabraClave">
-          <End Role="Incidente" Type="Self.Incidente" Multiplicity="1" />
-          <End Role="PalabraClave" Type="Self.PalabraClave" Multiplicity="*" />
-        </Association>
         <EntityContainer Name="db_SRI" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Destinatarios" EntityType="Self.Destinatarios" />
           <EntitySet Name="Funcionario" EntityType="Self.Funcionario" />
           <EntitySet Name="Horario" EntityType="Self.Horario" />
           <EntitySet Name="Incidente" EntityType="Self.Incidente" />
-          <EntitySet Name="PalabraClave" EntityType="Self.PalabraClave" />
-          <AssociationSet Name="FK_IncidenteMailDestinatarios" Association="Self.FK_IncidenteMailDestinatarios">
-            <End Role="IncidenteMail" EntitySet="Incidente" />
-            <End Role="Destinatarios" EntitySet="Destinatarios" />
-          </AssociationSet>
           <AssociationSet Name="FK_FuncionarioIncidente" Association="Self.FK_FuncionarioIncidente">
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Incidente" EntitySet="Incidente" />
@@ -329,10 +255,6 @@
             <End Role="Horario" EntitySet="Horario" />
             <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
-          <AssociationSet Name="FK_IncidentePalabraClave" Association="Self.FK_IncidentePalabraClave">
-            <End Role="Incidente" EntitySet="Incidente" />
-            <End Role="PalabraClave" EntitySet="PalabraClave" />
-          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -340,15 +262,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="db_SRI_ModelStoreContainer" CdmEntityContainer="db_SRI">
-          <EntitySetMapping Name="Destinatarios">
-            <EntityTypeMapping TypeName="db_SRI_Model.Destinatarios">
-              <MappingFragment StoreEntitySet="Destinatarios">
-                <ScalarProperty Name="valor" ColumnName="valor" />
-                <ScalarProperty Name="tipo" ColumnName="tipo" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Funcionario">
             <EntityTypeMapping TypeName="db_SRI_Model.Funcionario">
               <MappingFragment StoreEntitySet="Funcionario">
@@ -366,6 +279,7 @@
           <EntitySetMapping Name="Horario">
             <EntityTypeMapping TypeName="db_SRI_Model.Horario">
               <MappingFragment StoreEntitySet="Horario">
+                <ScalarProperty Name="is_eliminado" ColumnName="is_eliminado" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="hora_inicio" ColumnName="hora_inicio" />
                 <ScalarProperty Name="hora_fin" ColumnName="hora_fin" />
@@ -375,6 +289,8 @@
           <EntitySetMapping Name="Incidente">
             <EntityTypeMapping TypeName="IsTypeOf(db_SRI_Model.Incidente)">
               <MappingFragment StoreEntitySet="Incidente">
+                <ScalarProperty Name="is_eliminado" ColumnName="is_eliminado" />
+                <ScalarProperty Name="palabras_clave" ColumnName="palabras_clave" />
                 <ScalarProperty Name="tipo" ColumnName="tipo" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -405,19 +321,13 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(db_SRI_Model.IncidenteMail)">
               <MappingFragment StoreEntitySet="IncidenteMail">
+                <ScalarProperty Name="destinatariosTo" ColumnName="destinatariosTo" />
+                <ScalarProperty Name="destinatariosCc" ColumnName="destinatariosCc" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="remitente" ColumnName="remitente" />
                 <ScalarProperty Name="contenido" ColumnName="contenido" />
                 <ScalarProperty Name="respuesta" ColumnName="respuesta" />
                 <ScalarProperty Name="asunto" ColumnName="asunto" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PalabraClave">
-            <EntityTypeMapping TypeName="db_SRI_Model.PalabraClave">
-              <MappingFragment StoreEntitySet="PalabraClave">
-                <ScalarProperty Name="valor" ColumnName="valor" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -435,22 +345,6 @@
             </EndProperty>
             <EndProperty Name="Funcionario">
               <ScalarProperty Name="ci" ColumnName="ci" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK_IncidentePalabraClave" TypeName="db_SRI_Model.FK_IncidentePalabraClave" StoreEntitySet="PalabraClave">
-            <EndProperty Name="Incidente">
-              <ScalarProperty Name="Id" ColumnName="Incidente_Id" />
-            </EndProperty>
-            <EndProperty Name="PalabraClave">
-              <ScalarProperty Name="Id" ColumnName="Id" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="FK_IncidenteMailDestinatarios" TypeName="db_SRI_Model.FK_IncidenteMailDestinatarios" StoreEntitySet="Destinatarios">
-            <EndProperty Name="IncidenteMail">
-              <ScalarProperty Name="Id" ColumnName="IncidenteMail_Id" />
-            </EndProperty>
-            <EndProperty Name="Destinatarios">
-              <ScalarProperty Name="Id" ColumnName="Id" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

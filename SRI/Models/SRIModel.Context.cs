@@ -25,16 +25,12 @@ namespace SRI.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Destinatarios> Destinatarios { get; set; }
         public virtual DbSet<Funcionario> Funcionario { get; set; }
         public virtual DbSet<Horario> Horario { get; set; }
         public virtual DbSet<Incidente> Incidente { get; set; }
-        public virtual DbSet<PalabraClave> PalabraClave { get; set; }
 
-        public System.Data.Entity.DbSet<SRI.Models.IncidenteLlamado> IncidentesLlamado { get; set; }
-        public System.Data.Entity.DbSet<SRI.Models.IncidenteChatWpp> IncidentesChatWpp { get; set; }
-        public System.Data.Entity.DbSet<SRI.Models.IncidenteMail> IncidentesMail { get; set; }
-
-
+        public DbSet<IncidenteLlamado> IncidentesLlamado { get; set; }
+        public DbSet<IncidenteChatWpp> IncidentesChatWpp { get; set; }
+        public DbSet<IncidenteMail> IncidentesMail { get; set; }
     }
 }

@@ -25,7 +25,19 @@ namespace Web.Controllers
         // GET: Funcionario
         public ActionResult Index()
         {
-            return View(db.Funcionario.ToList().Where(x => x.is_eliminado == false));
+            List<Funcionario> listFuncionarios = db.Funcionario.Where(x => x.is_eliminado == false).ToList();
+
+            List<FuncionarioVM> listFuncionariosVM = new List<FuncionarioVM>();
+
+            foreach (Funcionario funcionario in listFuncionarios)
+            {
+
+                FuncionarioVM funcionarioVM = (FuncionarioVM)funcionario;
+                listFuncionariosVM.Add(funcionarioVM);
+
+            }
+
+            return View(listFuncionariosVM);
         }
 
         // GET: Funcionario/Details/5
@@ -158,7 +170,9 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(funcionario);
+            FuncionarioVM funcionarioVM = (FuncionarioVM)funcionario;
+
+            return View(funcionarioVM);
         }
 
         // POST: Funcionario/Delete/5

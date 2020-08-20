@@ -14,12 +14,6 @@ namespace SRI.Models
     
     public partial class Incidente
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Incidente()
-        {
-            this.PalabraClave = new HashSet<PalabraClave>();
-        }
-    
         public int Id { get; set; }
         public System.DateTime fecha_suceso { get; set; }
         public System.DateTime fecha_creacion { get; set; }
@@ -27,9 +21,9 @@ namespace SRI.Models
         public string resolucion { get; set; }
         public string descripcion { get; set; }
         public int tipo { get; set; }
+        public string palabras_clave { get; set; }
+        public Nullable<bool> is_eliminado { get; set; }
     
         public virtual Funcionario Funcionario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PalabraClave> PalabraClave { get; set; }
     }
 }

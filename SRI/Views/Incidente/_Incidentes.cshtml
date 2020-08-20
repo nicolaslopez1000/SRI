@@ -1,33 +1,7 @@
 ﻿@model IEnumerable<SRI.Models.ViewModels.IncidenteVM>
 
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
-<h2>Crear Incidente</h2>
-<hr>
-
-
-<h4>Seleccione el tipo de incidente</h4>
-<div>
-    <select id="select-incident" class="form-control col-md-6">
-
-        <option value="IncidenteLlamado">Llamado</option>
-        <option value="IncidenteChatWpp">Chat de WhatsApp</option>
-        <option value="IncidenteMail">Mail</option>
-
-    </select>
-</div>
-
-<div class="col-md-6">
-    <button class="btn btn-outline-secondary" onclick="cargarViewTipoIncidente()" type="button">Continuar</button>
-</div>
-
-<br />
-<br />
-
-<h3>Listado de incidentes</h3>
+<h3>Listado de incidentes Parcial</h3>
 
 <table class="table">
     <tr>
@@ -86,36 +60,3 @@
 
 </table>
 
-<div id="ListadoIncidentes">
-
-
-
-</div>
-
-
-
-
-@section Scripts{
-
-    <script>
-
-        $.ajax({
-            type: "POST",
-            url: "/Incidente/GetPartialIncidentes",
-            data: {"ciFuncionario": "32499251" },
-            success: function (data) {
-                $('#ListadoIncidentes').html(data);
-            },
-        });
-
-        function cargarViewTipoIncidente() {
-
-            var type = $('select[id=select-incident] option').filter(':selected').val();
-            var redirectUrl = "/" + type + "/Create"
-            window.location.href = redirectUrl;
-
-        }
-
-
-    </script>
-}

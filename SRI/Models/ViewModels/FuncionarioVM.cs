@@ -49,6 +49,9 @@ namespace SRI.Models.ViewModels
 
         [Display(Name = "Horario")]
         public string horario_string { get; set; }
+
+
+        [Display(Name = "Rol")]
         public Rol rol { get; set; }
 
         public static explicit operator FuncionarioVM(Funcionario v)

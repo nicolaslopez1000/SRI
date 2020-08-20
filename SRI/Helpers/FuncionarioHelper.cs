@@ -13,7 +13,7 @@ namespace SRI.Helpers
 
         public IEnumerable<SelectListItem> GetListaHorarios(int selectedItem = -1)
         {
-            List<Horario> listaHorarios = db.Horario.ToList();
+            List<Horario> listaHorarios = db.Horario.Where(x => x.is_eliminado == false).ToList();
 
             List<SelectListItem> horariosDropDown = new List<SelectListItem>();
 

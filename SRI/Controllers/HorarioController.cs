@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using SRI.Authorization;
 using SRI.Models;
+using SRI.Models.ViewModels;
 
 namespace Web.Controllers
 {
@@ -19,7 +20,16 @@ namespace Web.Controllers
         // GET: Horario
         public ActionResult Index()
         {
-            return View(db.Horario.ToList());
+            List<Horario> listHorario = db.Horario.Where(x => x.is_eliminado == false).ToList();
+            List<HorarioVM> listHorarioVM = new List<HorarioVM>();
+
+            foreach ( Horario horario in listHorario)
+            {
+                HorarioVM horarioVM = (HorarioVM)horario;
+                listHorarioVM.Add(horarioVM);
+            }
+
+            return View(listHorarioVM);
         }
 
         // GET: Horario/Details/5
@@ -72,23 +82,32 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(horario);
+            HorarioVM horarioVM = (HorarioVM)horario;
+            return View(horarioVM);
         }
 
         // POST: Horario/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,hora_inicio,hora_fin")] Horario horario)
+        public ActionResult Edit([Bind(Include = "Id,hora_inicio,hora_fin")] HorarioVM horarioVM)
         {
-            if (ModelState.IsValid)
+
+            using (db_SRI context = new db_SRI())
             {
-                db.Entry(horario).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                Horario horario = db.Horario.Find(horarioVM.Id);
+
+                horario.hora_fin = horarioVM.hora_fin;
+                horario.hora_inicio = horarioVM.hora_inicio;
+
+                if (ModelState.IsValid)
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
             }
-            return View(horario);
+            
+
+            return View(horarioVM);
         }
 
         // GET: Horario/Delete/5
@@ -103,7 +122,8 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(horario);
+            HorarioVM horarioVM = (HorarioVM)horario;
+            return View(horarioVM);
         }
 
         // POST: Horario/Delete/5
@@ -112,7 +132,7 @@ namespace Web.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Horario horario = db.Horario.Find(id);
-            db.Horario.Remove(horario);
+            horario.is_eliminado = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

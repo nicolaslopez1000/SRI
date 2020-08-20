@@ -1,0 +1,18 @@
+﻿@model SRI.Models.ViewModels.IncidenteChatWppVM
+
+@{
+    ViewBag.Title = "Crear incidente Chat Wpp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+@using (Html.BeginForm("Create", "IncidenteChatWpp"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h3>Nuevo Incidente de tipo Chat de WhatsApp</h3>
+        <br />
+

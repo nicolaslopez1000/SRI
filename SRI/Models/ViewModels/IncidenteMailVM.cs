@@ -9,16 +9,13 @@
 
 namespace SRI.Models.ViewModels
 {
+    using SRI.Models.Enums;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public partial class IncidenteMailVM : IncidenteVM
     {
-        public IncidenteMailVM()
-        {
-            this.Destinatarios = new HashSet<Destinatarios>();
-        }
 
         [Required(ErrorMessage = "Ingrese el asunto del mail")]
         [Display(Name = "Asunto")]
@@ -44,6 +41,23 @@ namespace SRI.Models.ViewModels
         [Display(Name = "Destinatarios Cc")]
         public string destinatarioCc { get; set; }
 
-        public virtual ICollection<Destinatarios> Destinatarios { get; set; }
+
+
+        public static explicit operator IncidenteMailVM(IncidenteMail incidenteMail)
+        {
+            IncidenteMailVM incidenteMailVM = new IncidenteMailVM();
+
+            incidenteMailVM.fecha_suceso = incidenteMail.fecha_suceso;
+            incidenteMailVM.fecha_creacion = incidenteMail.fecha_creacion;
+            incidenteMailVM.resolucion = incidenteMail.resolucion;
+            incidenteMailVM.emocion = (Emocion)incidenteMail.emocion;
+            incidenteMailVM.descripcion = incidenteMail.descripcion;
+            incidenteMailVM.tipo = (TipoIncidente)incidenteMail.tipo;
+            incidenteMailVM.Funcionario = (FuncionarioVM)incidenteMail.Funcionario;
+
+            
+            return incidenteMailVM;
+        }
+
     }
 }

@@ -21,17 +21,7 @@ namespace SRI.Helpers
             incidenteVM.emocion = (Emocion)incidente.emocion;
             incidenteVM.descripcion = incidente.descripcion;
             incidenteVM.tipo = (TipoIncidente)incidente.tipo;
-            incidenteVM.PalabraClave = new List<PalabraClaveVM>();
-
-            foreach (PalabraClave palabraClave in incidente.PalabraClave)
-            {
-
-                PalabraClaveVM palabraClaveVM = new PalabraClaveVM();
-                palabraClaveVM.valor = palabraClave.valor;
-                palabraClaveVM.Id = palabraClave.Id;
-
-
-            }
+            incidenteVM.palabrasClave = incidente.palabras_clave;
             incidenteVM.Funcionario = (FuncionarioVM)incidente.Funcionario;
 
             return incidenteVM;

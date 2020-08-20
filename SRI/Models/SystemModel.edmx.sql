@@ -93,7 +93,8 @@ GO
 CREATE TABLE [dbo].[Horario] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [hora_inicio] datetime  NOT NULL,
-    [hora_fin] datetime  NOT NULL
+    [hora_fin] datetime  NOT NULL,
+    [is_eliminado] bit default 'FALSE'
 );
 GO
 
@@ -105,35 +106,23 @@ CREATE TABLE [dbo].[Incidente] (
     [emocion] int  NOT NULL,
     [Funcionario_ci] nvarchar(50)  NOT NULL,
     [resolucion] nvarchar(50)  ,
-    [descripcion] nvarchar(200)  ,
-    [tipo] int NOT NULL  
+    [descripcion] nvarchar(200)  ,    
+    [palabras_clave] nvarchar(max),
+    [tipo] int NOT NULL  ,
+    [is_eliminado] bit default 'FALSE'
 
 );
 GO
 
--- Creating table 'Destinatarios'
-CREATE TABLE [dbo].[Destinatarios] (
-    [valor] nvarchar(max)  NOT NULL,
-    [tipo] int  NOT NULL,
-    [Id] int IDENTITY(1,1) NOT NULL,
-    [IncidenteMail_Id] int  NOT NULL
-);
-GO
-
--- Creating table 'PalabraClave'
-CREATE TABLE [dbo].[PalabraClave] (
-    [valor] nvarchar(max)  NOT NULL,
-    [Id] int IDENTITY(1,1) NOT NULL,
-    [Incidente_Id] int  NOT NULL
-);
-GO
 
 -- Creating table 'IncidenteMail'
 CREATE TABLE [dbo].[IncidenteMail] (
     [asunto] nvarchar(max)  NOT NULL,
-    [respuesta] nvarchar(max)  NOT NULL,
+    [respuesta] nvarchar(max) ,
     [contenido] nvarchar(max)  NOT NULL,
     [remitente] nvarchar(max)  NOT NULL,
+    [destinatariosCc] nvarchar(max),
+    [destinatariosTo] nvarchar(max)  NOT NULL,
     [Id] int  NOT NULL
 );
 GO
@@ -181,17 +170,7 @@ ADD CONSTRAINT [PK_Incidente]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'Destinatarios'
-ALTER TABLE [dbo].[Destinatarios]
-ADD CONSTRAINT [PK_Destinatarios]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
 
--- Creating primary key on [Id] in table 'PalabraClave'
-ALTER TABLE [dbo].[PalabraClave]
-ADD CONSTRAINT [PK_PalabraClave]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
 
 -- Creating primary key on [Id] in table 'IncidenteMail'
 ALTER TABLE [dbo].[IncidenteMail]
@@ -230,35 +209,12 @@ ON [dbo].[Incidente]
     ([Funcionario_ci]);
 GO
 
--- Creating foreign key on [IncidenteMail_Id] in table 'Destinatarios'
-ALTER TABLE [dbo].[Destinatarios]
-ADD CONSTRAINT [FK_IncidenteMailDestinatarios]
-    FOREIGN KEY ([IncidenteMail_Id])
-    REFERENCES [dbo].[IncidenteMail]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_IncidenteMailDestinatarios'
-CREATE INDEX [IX_FK_IncidenteMailDestinatarios]
-ON [dbo].[Destinatarios]
-    ([IncidenteMail_Id]);
-GO
 
--- Creating foreign key on [Incidente_Id] in table 'PalabraClave'
-ALTER TABLE [dbo].[PalabraClave]
-ADD CONSTRAINT [FK_IncidentePalabraClave]
-    FOREIGN KEY ([Incidente_Id])
-    REFERENCES [dbo].[Incidente]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_IncidentePalabraClave'
-CREATE INDEX [IX_FK_IncidentePalabraClave]
-ON [dbo].[PalabraClave]
-    ([Incidente_Id]);
-GO
+
+
+
 
 -- Creating foreign key on [Horario_Id] in table 'Funcionario'
 ALTER TABLE [dbo].[Funcionario]

@@ -13,14 +13,34 @@ using SRI.Models.ViewModels;
 
 namespace SRI.Controllers
 {
-    [Authorize]
+    
     public class IncidenteController : Controller
     {
         private db_SRI db = new db_SRI();
 
         private IncidenteHelper ih = new IncidenteHelper();
 
-        // GET: Incidente
+        public ActionResult GetPartialIncidentes(string ciFuncionario)
+        {
+
+            List<Incidente> listaIncidentes = db.Incidente.ToList();
+
+            List<IncidenteVM> listaIncidentesVM = new List<IncidenteVM>();
+
+            foreach (Incidente incidente in listaIncidentes)
+            {
+                IncidenteVM incidenteVM = ih.IncidenteToViewModel(incidente);
+                listaIncidentesVM.Add(incidenteVM);
+            }
+
+
+            return PartialView("_Incidentes", listaIncidentesVM);
+        }
+
+
+        // GET: Incidente.
+
+        [Authorize]
         public ActionResult Index()
         {
 
@@ -39,6 +59,8 @@ namespace SRI.Controllers
         }
 
         // GET: Incidente/Details/5
+
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -64,74 +86,42 @@ namespace SRI.Controllers
                 default:
                     break;
             }
-
             
             return View(incidente);
         }
 
-        // GET: Incidente/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,palabrasClave,descripcion")] IncidenteVM incidente)
-        {
-            if (ModelState.IsValid)
-            {
-               
-                return RedirectToAction("Index");
-            }
-
-            return View(incidente);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // GET: Incidente/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Incidente incidente = db.Incidente.Find(id);
+            Incidente incidente  = db.Incidente.Find(id);
             if (incidente == null)
             {
                 return HttpNotFound();
             }
-            return View(incidente);
+
+            switch (incidente.tipo)
+            {
+                case (int)TipoIncidente.chatWpp:
+                    return RedirectToAction("Edit", "IncidenteChatWpp", new { id = id }); ;
+                case (int)TipoIncidente.llamado:
+                    return RedirectToAction("Edit", "IncidenteLlamado", new { id = id }); ;
+                case (int)TipoIncidente.mail:
+                    return RedirectToAction("Edit", "IncidenteMail", new { id = id }); ;
+
+                default:
+                    break;
+            }
+
+            return HttpNotFound();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion")] Incidente incidente)
@@ -145,7 +135,7 @@ namespace SRI.Controllers
             return View(incidente);
         }
 
-
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -161,6 +151,7 @@ namespace SRI.Controllers
         }
 
         // POST: Incidente/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
