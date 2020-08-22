@@ -17,7 +17,7 @@ namespace SRI.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Funcionario()
         {
-            this.Incidente = new HashSet<Incidente>();
+            this.Incidentes = new HashSet<Incidente>();
         }
     
         public string nombre { get; set; }
@@ -30,7 +30,7 @@ namespace SRI.Models
         public Nullable<bool> is_eliminado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Incidente> Incidente { get; set; }
+        public virtual ICollection<Incidente> Incidentes { get; set; }
         public virtual Horario Horario { get; set; }
     }
 }

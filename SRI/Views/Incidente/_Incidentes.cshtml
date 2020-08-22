@@ -1,62 +1,62 @@
 ﻿@model IEnumerable<SRI.Models.ViewModels.IncidenteVM>
 
 
-<h3>Listado de incidentes Parcial</h3>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.tipo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fecha_suceso)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fecha_creacion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.emocion)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.resolucion)
-        </th>
-        <th>
-            Funcionario
-        </th>
-        <th></th>
-    </tr>
+    <div id="table-print">
+        <table  class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.tipo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fecha_suceso)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.fecha_creacion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.emocion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.resolucion)
+                </th>
+                <th>
+                    Funcionario
+                </th>
+                <th></th>
+            </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.tipo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.fecha_suceso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.fecha_suceso)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.fecha_creacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.emocion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.resolucion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Funcionario.ci)   @Html.DisplayFor(modelItem => item.Funcionario.nombre)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tipo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fecha_suceso)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fecha_creacion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.emocion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.resolucion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Funcionario.ci)   @Html.DisplayFor(modelItem => item.Funcionario.nombre)
+                    </td>
+                    <td class="botones">
+                        @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
 
-</table>
+        </table>
+
+    </div>
+<button type="button" class="btn btn-danger  print" value="table-print">Imprimir</button>
 

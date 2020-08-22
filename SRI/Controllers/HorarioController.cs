@@ -32,20 +32,7 @@ namespace Web.Controllers
             return View(listHorarioVM);
         }
 
-        // GET: Horario/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Horario horario = db.Horario.Find(id);
-            if (horario == null)
-            {
-                return HttpNotFound();
-            }
-            return View(horario);
-        }
+        
 
         // GET: Horario/Create
         public ActionResult Create()

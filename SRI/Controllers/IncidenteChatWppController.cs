@@ -51,7 +51,7 @@ namespace SRI.Controllers
         // POST: IncidenteChatWpp/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,tipo,respuesta,telefono_entrante,telefono_saliente,nombre_persona_llama,palabrasClave")] IncidenteChatWppVM incidenteChatWppVM)
+        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,tipo,respuesta,telefono_entrante,telefono_saliente,nombre_persona_escribe,palabrasClave,funcionario_ayudado_ci")] IncidenteChatWppVM incidenteChatWppVM)
         {
             string email = User.Identity.Name;
 
@@ -61,6 +61,7 @@ namespace SRI.Controllers
                 {
                     IncidenteChatWpp incidenteChatWpp = new IncidenteChatWpp();
 
+                    incidenteChatWpp.is_eliminado = false;
                     incidenteChatWpp.fecha_suceso =  incidenteChatWppVM.fecha_suceso;
                     incidenteChatWpp.fecha_creacion = DateTime.Now;
                     incidenteChatWpp.resolucion = incidenteChatWppVM.resolucion;
@@ -71,24 +72,35 @@ namespace SRI.Controllers
                     Funcionario funcionario = context.Funcionario.FirstOrDefault(a => a.mail.Equals(email));
                     incidenteChatWpp.Funcionario = funcionario;
 
+                    Funcionario funcionarioAyudado = context.Funcionario.Find(incidenteChatWppVM.funcionario_ayudado_ci);
+                    incidenteChatWpp.FuncionarioAyudado = funcionarioAyudado;
+
+
 
                     incidenteChatWpp.telefono_entrante = incidenteChatWppVM.telefono_entrante;
-                    incidenteChatWpp.telefono_saliente = incidenteChatWppVM.telefono_saliente;
-                    incidenteChatWpp.nombre_persona_escribe = incidenteChatWppVM.nombre_persona_escribe;
                     incidenteChatWpp.respuesta = incidenteChatWppVM.respuesta;
 
 
                     incidenteChatWpp.palabras_clave = incidenteChatWppVM.palabrasClave;
 
-
-                    if (ModelState.IsValid)
+                    if (funcionarioAyudado != null)
                     {
-                        context.IncidentesChatWpp.Add(incidenteChatWpp);
-                        context.SaveChanges();
-                        dbContextTransaction.Commit();
-                        return RedirectToAction("Index");
+                        if (ModelState.IsValid)
+                        {
+                            context.IncidentesChatWpp.Add(incidenteChatWpp);
+                            context.SaveChanges();
+                            dbContextTransaction.Commit();
+                            return RedirectToAction("Index", "Incidente");
+                        }
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "No existe ningún funcionario con esa cedula , confirmela con el funcionario que se comunicó");
                     }
 
+
+                   
 
                 }
             }
@@ -119,15 +131,37 @@ namespace SRI.Controllers
         // POST: IncidenteChatWpp/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,tipo,respuesta,telefono_entrante,telefono_saliente,nombre_persona_llama")] IncidenteChatWpp incidenteChatWpp)
+        public ActionResult Edit([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,respuesta,telefono_entrante,palabrasClave")] IncidenteChatWppVM incidenteChatWppVM)
         {
-            if (ModelState.IsValid)
+
+            using (db_SRI context = new db_SRI())
             {
-                db.Entry(incidenteChatWpp).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                using (var dbContextTransaction = context.Database.BeginTransaction())
+                {
+
+
+                    IncidenteChatWpp incidenteChatWpp = context.IncidentesChatWpp.Find(incidenteChatWppVM.Id);
+
+                    
+                    incidenteChatWpp.resolucion = incidenteChatWppVM.resolucion;
+                    incidenteChatWpp.descripcion = incidenteChatWppVM.descripcion;
+                    incidenteChatWpp.telefono_entrante = incidenteChatWppVM.telefono_entrante;
+                    incidenteChatWpp.respuesta = incidenteChatWppVM.respuesta;
+
+
+                    if (ModelState.IsValid)
+                    {
+                        context.SaveChanges();
+                        dbContextTransaction.Commit();
+                        return RedirectToAction("Index", "Incidente");
+                    }
+
+                }
             }
-            return View(incidenteChatWpp);
+
+
+            return View(incidenteChatWppVM);
+
         }
 
         // GET: IncidenteChatWpp/Delete/5

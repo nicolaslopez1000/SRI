@@ -25,5 +25,6 @@ namespace SRI.Models
         public Nullable<bool> is_eliminado { get; set; }
     
         public virtual Funcionario Funcionario { get; set; }
+        public virtual Funcionario FuncionarioAyudado { get; set; }
     }
 }

@@ -28,9 +28,5 @@ namespace SRI.Models
         public virtual DbSet<Funcionario> Funcionario { get; set; }
         public virtual DbSet<Horario> Horario { get; set; }
         public virtual DbSet<Incidente> Incidente { get; set; }
-
-        public DbSet<IncidenteLlamado> IncidentesLlamado { get; set; }
-        public DbSet<IncidenteChatWpp> IncidentesChatWpp { get; set; }
-        public DbSet<IncidenteMail> IncidentesMail { get; set; }
     }
 }

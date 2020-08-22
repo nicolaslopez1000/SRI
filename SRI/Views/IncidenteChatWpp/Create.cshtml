@@ -1,7 +1,7 @@
 ﻿@model SRI.Models.ViewModels.IncidenteChatWppVM
 
 @{
-    ViewBag.Title = "Crear incidente Chat Wpp";
+    ViewBag.Title = "Crear incidente ChatWhatsapp";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -43,6 +43,8 @@
             </div>
         </div>
 
+
+
         <div class="form-group">
             @Html.LabelFor(model => model.resolucion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -51,6 +53,23 @@
             </div>
         </div>
 
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.funcionario_ayudado_ci, htmlAttributes: new { @class = "control-label col-md-2" })
+
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.funcionario_ayudado_ci, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.funcionario_ayudado_ci, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group hidden">
+            @Html.LabelFor(model => model.palabrasClave, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.palabrasClave, new { htmlAttributes = new { @class = "form-control palabrasClaveEditor" } })
+                @Html.ValidationMessageFor(model => model.palabrasClave, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
 
         <div class="form-group">
@@ -69,29 +88,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.telefono_saliente, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.telefono_saliente, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.telefono_saliente, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.palabrasClave, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.palabrasClave, new { htmlAttributes = new { @class = "form-control palabrasClaveEditor" } })
-                @Html.ValidationMessageFor(model => model.palabrasClave, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.nombre_persona_escribe, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.nombre_persona_escribe, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.nombre_persona_escribe, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

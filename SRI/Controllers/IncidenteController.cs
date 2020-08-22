@@ -23,13 +23,13 @@ namespace SRI.Controllers
         public ActionResult GetPartialIncidentes(string ciFuncionario)
         {
 
-            List<Incidente> listaIncidentes = db.Incidente.ToList();
+            List<Incidente> listaIncidentes = db.Incidente.Where(x => x.is_eliminado == false).ToList();
 
             List<IncidenteVM> listaIncidentesVM = new List<IncidenteVM>();
 
             foreach (Incidente incidente in listaIncidentes)
             {
-                IncidenteVM incidenteVM = ih.IncidenteToViewModel(incidente);
+                IncidenteVM incidenteVM = (IncidenteVM)incidente;
                 listaIncidentesVM.Add(incidenteVM);
             }
 
@@ -44,13 +44,13 @@ namespace SRI.Controllers
         public ActionResult Index()
         {
 
-            List<Incidente> listaIncidentes = db.Incidente.ToList();
+            List<Incidente> listaIncidentes = db.Incidente.Where(x => x.is_eliminado == false).ToList();
 
             List<IncidenteVM> listaIncidentesVM = new List<IncidenteVM>();
 
             foreach ( Incidente incidente in listaIncidentes)
             {
-                IncidenteVM incidenteVM = ih.IncidenteToViewModel(incidente);
+                IncidenteVM incidenteVM = (IncidenteVM)incidente;
                 listaIncidentesVM.Add(incidenteVM);
             }
 
@@ -86,8 +86,8 @@ namespace SRI.Controllers
                 default:
                     break;
             }
-            
-            return View(incidente);
+
+            return RedirectToAction("Index", "Incidente");
         }
 
 
@@ -122,20 +122,6 @@ namespace SRI.Controllers
         }
 
         [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion")] Incidente incidente)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(incidente).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(incidente);
-        }
-
-        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -147,7 +133,8 @@ namespace SRI.Controllers
             {
                 return HttpNotFound();
             }
-            return View(incidente);
+            IncidenteVM incidenteVM = (IncidenteVM)incidente;
+            return View(incidenteVM);
         }
 
         // POST: Incidente/Delete/5
@@ -157,7 +144,7 @@ namespace SRI.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Incidente incidente = db.Incidente.Find(id);
-            db.Incidente.Remove(incidente);
+            incidente.is_eliminado = true;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -49,8 +49,9 @@ namespace SRI.Controllers
         // POST: IncidenteLlamado/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,telefono_saliente,telefono_entrante,hora_inicio,hora_fin,nombre_persona_llama,palabrasClave")] IncidenteLlamadoVM incidenteLlamadoVM)
+        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,telefono_entrante,hora_inicio,hora_fin,palabrasClave,funcionario_ayudado_ci")] IncidenteLlamadoVM incidenteLlamadoVM)
         {
+
 
             string email = User.Identity.Name;
 
@@ -60,6 +61,7 @@ namespace SRI.Controllers
                 {
                     IncidenteLlamado incidenteLlamado = new IncidenteLlamado();
 
+                    incidenteLlamado.is_eliminado = false;
                     incidenteLlamado.fecha_suceso = incidenteLlamadoVM.fecha_suceso;
                     incidenteLlamado.fecha_creacion = DateTime.Now;
                     incidenteLlamado.resolucion = incidenteLlamadoVM.resolucion;
@@ -71,21 +73,32 @@ namespace SRI.Controllers
                     incidenteLlamado.Funcionario = funcionario;
 
                     incidenteLlamado.telefono_entrante = incidenteLlamadoVM.telefono_entrante;
-                    incidenteLlamado.telefono_saliente = incidenteLlamadoVM.telefono_saliente;
-                    incidenteLlamado.nombre_persona_llama = incidenteLlamadoVM.nombre_persona_llama;
+
+
+                    Funcionario funcionarioAyudado = context.Funcionario.Find(incidenteLlamadoVM.funcionario_ayudado_ci);
+                    incidenteLlamado.FuncionarioAyudado = funcionarioAyudado;
+
                     incidenteLlamado.hora_fin = incidenteLlamadoVM.hora_fin;
                     incidenteLlamado.hora_inicio = incidenteLlamadoVM.hora_inicio;
 
 
-                    incidenteLlamado.palabras_clave = incidenteLlamadoVM.palabrasClave;                  
+                    incidenteLlamado.palabras_clave = incidenteLlamadoVM.palabrasClave;
 
-
-                    if (ModelState.IsValid)
+                    if (funcionarioAyudado != null)
                     {
-                        context.IncidentesLlamado.Add(incidenteLlamado);
-                        context.SaveChanges();
-                        dbContextTransaction.Commit();
-                        return RedirectToAction("Index");
+                        if (ModelState.IsValid)
+                        {
+                            context.IncidentesLlamado.Add(incidenteLlamado);
+                            context.SaveChanges();
+                            dbContextTransaction.Commit();
+                            return RedirectToAction("Index");
+                        }
+                    }
+                    else
+                    {
+
+                        ModelState.AddModelError(string.Empty, "No existe ningún funcionario con esa cedula , confirmela con el funcionario que se comunicó");
+
                     }
 
                 }

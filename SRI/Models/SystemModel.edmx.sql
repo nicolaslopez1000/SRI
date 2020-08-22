@@ -17,6 +17,8 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+
+
 IF OBJECT_ID(N'[dbo].[FK_FuncionarioIncidente]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Incidente] DROP CONSTRAINT [FK_FuncionarioIncidente];
 GO
@@ -38,6 +40,11 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_IncidenteChatWpp_inherits_Incidente]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[IncidenteChatWpp] DROP CONSTRAINT [FK_IncidenteChatWpp_inherits_Incidente];
 GO
+
+IF OBJECT_ID(N'[dbo].[FK_FuncionarioAyudadoIncidente]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Incidente] DROP CONSTRAINT [FK_FuncionarioAyudadoIncidente];
+GO
+
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -98,6 +105,9 @@ CREATE TABLE [dbo].[Horario] (
 );
 GO
 
+
+
+
 -- Creating table 'Incidente'
 CREATE TABLE [dbo].[Incidente] (
     [Id] int IDENTITY(1,1) NOT NULL,
@@ -109,7 +119,8 @@ CREATE TABLE [dbo].[Incidente] (
     [descripcion] nvarchar(200)  ,    
     [palabras_clave] nvarchar(max),
     [tipo] int NOT NULL  ,
-    [is_eliminado] bit default 'FALSE'
+    [is_eliminado] bit default 'FALSE',
+    [Funcionario_ayudado] nvarchar(50)
 
 );
 GO
@@ -129,11 +140,9 @@ GO
 
 -- Creating table 'IncidenteLlamado'
 CREATE TABLE [dbo].[IncidenteLlamado] (
-    [telefono_saliente] nvarchar(max)  NOT NULL,
     [telefono_entrante] nvarchar(max)  NOT NULL,
     [hora_inicio] datetime  NOT NULL,
     [hora_fin] datetime  NOT NULL,
-    [nombre_persona_llama] nvarchar(max)  NOT NULL,
     [Id] int  NOT NULL
 );
 GO
@@ -142,8 +151,6 @@ GO
 CREATE TABLE [dbo].[IncidenteChatWpp] (
     [respuesta] nvarchar(max)  NOT NULL,
     [telefono_entrante] nvarchar(max)  NOT NULL,
-    [telefono_saliente] nvarchar(max)  NOT NULL,
-    [nombre_persona_escribe] nvarchar(max)  NOT NULL,
     [Id] int  NOT NULL
 );
 GO
@@ -203,15 +210,31 @@ ADD CONSTRAINT [FK_FuncionarioIncidente]
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_FuncionarioIncidente'
-CREATE INDEX [IX_FK_FuncionarioIncidente]
-ON [dbo].[Incidente]
-    ([Funcionario_ci]);
+
+ALTER TABLE [dbo].[Incidente]
+ADD CONSTRAINT [FK_FuncionarioAyudadoIncidente]
+    FOREIGN KEY ([Funcionario_ayudado])
+    REFERENCES [dbo].[Funcionario]
+        ([ci])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 
 
 
+
+
+
+
+
+
+
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_FuncionarioIncidente'
+CREATE INDEX [IX_FK_FuncionarioIncidente]
+ON [dbo].[Incidente]
+    ([Funcionario_ci]);
+GO
 
 
 

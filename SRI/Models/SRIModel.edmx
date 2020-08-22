@@ -42,6 +42,7 @@
           <Property Name="palabras_clave" Type="nvarchar(max)" />
           <Property Name="tipo" Type="int" Nullable="false" />
           <Property Name="is_eliminado" Type="bit" />
+          <Property Name="Funcionario_ayudado" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="IncidenteChatWpp">
           <Key>
@@ -49,19 +50,15 @@
           </Key>
           <Property Name="respuesta" Type="nvarchar(max)" Nullable="false" />
           <Property Name="telefono_entrante" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="telefono_saliente" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="nombre_persona_escribe" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="IncidenteLlamado">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="telefono_saliente" Type="nvarchar(max)" Nullable="false" />
           <Property Name="telefono_entrante" Type="nvarchar(max)" Nullable="false" />
           <Property Name="hora_inicio" Type="datetime" Nullable="false" />
           <Property Name="hora_fin" Type="datetime" Nullable="false" />
-          <Property Name="nombre_persona_llama" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="IncidenteMail">
@@ -76,6 +73,18 @@
           <Property Name="destinatariosTo" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Id" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_FuncionarioAyudadoIncidente">
+          <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="0..1" />
+          <End Role="Incidente" Type="Self.Incidente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Funcionario">
+              <PropertyRef Name="ci" />
+            </Principal>
+            <Dependent Role="Incidente">
+              <PropertyRef Name="Funcionario_ayudado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FuncionarioIncidente">
           <End Role="Funcionario" Type="Self.Funcionario" Multiplicity="1" />
           <End Role="Incidente" Type="Self.Incidente" Multiplicity="*" />
@@ -149,6 +158,10 @@
           <EntitySet Name="IncidenteChatWpp" EntityType="Self.IncidenteChatWpp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncidenteLlamado" EntityType="Self.IncidenteLlamado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncidenteMail" EntityType="Self.IncidenteMail" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FuncionarioAyudadoIncidente" Association="Self.FK_FuncionarioAyudadoIncidente">
+            <End Role="Funcionario" EntitySet="Funcionario" />
+            <End Role="Incidente" EntitySet="Incidente" />
+          </AssociationSet>
           <AssociationSet Name="FK_FuncionarioIncidente" Association="Self.FK_FuncionarioIncidente">
             <End Role="Funcionario" EntitySet="Funcionario" />
             <End Role="Incidente" EntitySet="Incidente" />
@@ -186,7 +199,7 @@
           <Property Name="rol" Type="Int32" Nullable="false" />
           <Property Name="apellido" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="is_eliminado" Type="Boolean" />
-          <NavigationProperty Name="Incidente" Relationship="Self.FK_FuncionarioIncidente" FromRole="Funcionario" ToRole="Incidente" />
+          <NavigationProperty Name="Incidentes" Relationship="Self.FK_FuncionarioIncidente" FromRole="Funcionario" ToRole="Incidente" />
           <NavigationProperty Name="Horario" Relationship="Self.FK_HorarioFuncionario" FromRole="Funcionario" ToRole="Horario" />
         </EntityType>
         <EntityType Name="Horario">
@@ -213,19 +226,16 @@
           <Property Name="tipo" Type="Int32" Nullable="false" />
           <Property Name="palabras_clave" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="is_eliminado" Type="Boolean" />
+          <NavigationProperty Name="FuncionarioAyudado" Relationship="db_SRI_Model.FK_FuncionarioAyudadoIncidente" FromRole="Incidente" ToRole="Funcionario" />
         </EntityType>
         <EntityType Name="IncidenteChatWpp" BaseType="db_SRI_Model.Incidente">
           <Property Name="respuesta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="telefono_entrante" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="telefono_saliente" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="nombre_persona_escribe" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="IncidenteLlamado" BaseType="db_SRI_Model.Incidente">
-          <Property Name="telefono_saliente" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="telefono_entrante" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="hora_inicio" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="hora_fin" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="nombre_persona_llama" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="IncidenteMail" BaseType="db_SRI_Model.Incidente">
           <Property Name="asunto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -255,7 +265,15 @@
             <End Role="Horario" EntitySet="Horario" />
             <End Role="Funcionario" EntitySet="Funcionario" />
           </AssociationSet>
+          <AssociationSet Name="FK_FuncionarioAyudadoIncidente" Association="db_SRI_Model.FK_FuncionarioAyudadoIncidente">
+            <End Role="Funcionario" EntitySet="Funcionario" />
+            <End Role="Incidente" EntitySet="Incidente" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_FuncionarioAyudadoIncidente">
+          <End Type="db_SRI_Model.Funcionario" Role="Funcionario" Multiplicity="0..1" />
+          <End Type="db_SRI_Model.Incidente" Role="Incidente" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -303,18 +321,14 @@
             <EntityTypeMapping TypeName="IsTypeOf(db_SRI_Model.IncidenteLlamado)">
               <MappingFragment StoreEntitySet="IncidenteLlamado">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="nombre_persona_llama" ColumnName="nombre_persona_llama" />
                 <ScalarProperty Name="hora_fin" ColumnName="hora_fin" />
                 <ScalarProperty Name="hora_inicio" ColumnName="hora_inicio" />
                 <ScalarProperty Name="telefono_entrante" ColumnName="telefono_entrante" />
-                <ScalarProperty Name="telefono_saliente" ColumnName="telefono_saliente" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(db_SRI_Model.IncidenteChatWpp)">
               <MappingFragment StoreEntitySet="IncidenteChatWpp">
-                <ScalarProperty Name="nombre_persona_escribe" ColumnName="nombre_persona_escribe" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="telefono_saliente" ColumnName="telefono_saliente" />
                 <ScalarProperty Name="telefono_entrante" ColumnName="telefono_entrante" />
                 <ScalarProperty Name="respuesta" ColumnName="respuesta" />
               </MappingFragment>
@@ -346,6 +360,15 @@
             <EndProperty Name="Funcionario">
               <ScalarProperty Name="ci" ColumnName="ci" />
             </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="FK_FuncionarioAyudadoIncidente" TypeName="db_SRI_Model.FK_FuncionarioAyudadoIncidente" StoreEntitySet="Incidente">
+            <EndProperty Name="Incidente">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <EndProperty Name="Funcionario">
+              <ScalarProperty Name="ci" ColumnName="Funcionario_ayudado" />
+            </EndProperty>
+            <Condition ColumnName="Funcionario_ayudado" IsNull="false" />
           </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>

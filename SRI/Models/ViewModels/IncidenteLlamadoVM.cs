@@ -16,12 +16,7 @@ namespace SRI.Models.ViewModels
 
     public partial class IncidenteLlamadoVM : IncidenteVM
     {
-
-        [Required(ErrorMessage = "Ingrese el telefóno saliente ")]
-        [Display(Name = "Teléfono saliente")]
-        [DataType(DataType.PhoneNumber)]
-        public string telefono_saliente { get; set; }
-
+               
         [Required(ErrorMessage = "Ingrese el teléfono entrante")]
         [Display(Name = "Teléfono entrante")]
         [DataType(DataType.PhoneNumber)]
@@ -37,9 +32,7 @@ namespace SRI.Models.ViewModels
         [DataType(DataType.Time)]
         public System.DateTime hora_fin { get; set; }
 
-        [Required(ErrorMessage = "Ingrese el nombre de la persona que llama")]
-        [Display(Name = "Nombre persona que llama")]
-        public string nombre_persona_llama { get; set; }
+        
 
         public static explicit operator IncidenteLlamadoVM(IncidenteLlamado incidenteLlamado)
         {
@@ -54,10 +47,9 @@ namespace SRI.Models.ViewModels
             incidenteLlamadoVM.Funcionario = (FuncionarioVM)incidenteLlamado.Funcionario;
 
             incidenteLlamadoVM.telefono_entrante = incidenteLlamado.telefono_entrante;
-            incidenteLlamadoVM.telefono_saliente = incidenteLlamado.telefono_saliente;
             incidenteLlamadoVM.hora_inicio = incidenteLlamado.hora_inicio;
             incidenteLlamadoVM.hora_fin = incidenteLlamado.hora_fin;
-            incidenteLlamadoVM.nombre_persona_llama = incidenteLlamado.nombre_persona_llama;
+            incidenteLlamadoVM.FuncionarioAyudado = (FuncionarioVM)incidenteLlamado.FuncionarioAyudado;
 
 
             return incidenteLlamadoVM;

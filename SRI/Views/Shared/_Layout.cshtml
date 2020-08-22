@@ -66,7 +66,23 @@
         var identificador = 0
         var palabrasClave = []
 
+        $(document).ready(function () {
 
+            palabrasClaveString = $(".palabrasClaveEditor").val();
+
+            if (palabrasClaveString != "") {
+                palabrasClave = palabrasClaveString.split(',');
+
+                for (palabraIndex in palabrasClave) {
+
+                    palabra = palabrasClave[palabraIndex]
+                    $("#palabraClaveList").append('<div class="well">' + palabra + '<button type="button" style="float: right" class="btn btn - danger float - right remove" value="' + palabra + '">X</button></div>')
+
+                }
+
+            }
+
+        });
 
         function agregarPalabraClave() {
 
@@ -91,6 +107,34 @@
             removeVal = $(this).val()
             palabrasClave = palabrasClave.filter(e => e !== removeVal);
             $(".palabrasClaveEditor").val(palabrasClave)
+
+
+        });
+
+        $(document).on("click", "button.print", function () {
+
+            divToPrintId = $(this).val()
+
+
+            var divToPrint = document.getElementById(divToPrintId);
+
+            var newWin = window.open('', 'Print-Window');
+
+            $(".botones").hide()
+
+            newWin.document.open();
+
+            newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
+
+            $(".botones").show()
+
+            newWin.document.close();
+
+            
+
+            setTimeout(function () { newWin.close(); }, 10);
+
+           
 
 
         });

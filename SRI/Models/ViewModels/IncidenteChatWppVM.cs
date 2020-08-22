@@ -18,18 +18,13 @@ namespace SRI.Models.ViewModels
     {
         [Display(Name = "Respuesta")]
         [Required(ErrorMessage = "Ingrese la respuesta")]
+        [DataType(DataType.MultilineText)]
         public string respuesta { get; set; }
 
         [Display(Name = "Telefono entrante")]
         [Required(ErrorMessage = "Ingrese el teléfono entrante")]
         public string telefono_entrante { get; set; }
-        [Display(Name = "Teléfono entrante")]
-        [Required(ErrorMessage = "Ingrese el teléfono saliente")]
-        public string telefono_saliente { get; set; }
 
-        [Display(Name = "Nombre de persona que escribe")]
-        [Required(ErrorMessage = "Ingrese el nombre de la persona que escribe")]
-        public string nombre_persona_escribe { get; set; }
 
         public static explicit operator IncidenteChatWppVM(IncidenteChatWpp incidenteChatWpp)
         {
@@ -41,12 +36,11 @@ namespace SRI.Models.ViewModels
             incidenteChatWppVM.emocion = (Emocion)incidenteChatWpp.emocion;
             incidenteChatWppVM.descripcion = incidenteChatWpp.descripcion;
             incidenteChatWppVM.tipo = (TipoIncidente)incidenteChatWpp.tipo;
+            incidenteChatWppVM.palabrasClave = incidenteChatWpp.palabras_clave;
             incidenteChatWppVM.Funcionario = (FuncionarioVM)incidenteChatWpp.Funcionario;
-
+            incidenteChatWppVM.FuncionarioAyudado = (FuncionarioVM)incidenteChatWpp.FuncionarioAyudado;
 
             incidenteChatWppVM.telefono_entrante = incidenteChatWpp.telefono_entrante;
-            incidenteChatWppVM.telefono_saliente = incidenteChatWpp.telefono_saliente;
-            incidenteChatWppVM.nombre_persona_escribe = incidenteChatWpp.nombre_persona_escribe;
             incidenteChatWppVM.respuesta = incidenteChatWpp.respuesta;
 
             return incidenteChatWppVM;

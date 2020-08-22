@@ -41,10 +41,10 @@ namespace SRI.Models.ViewModels
         public string celular { get; set; }
 
         [Display(Name = "Contraseña ")]
-        [DataType(DataType.Password)]
-        [Required(ErrorMessage = "Ingrese su contraseña")]
+        [Required(ErrorMessage = "Ingrese la contraseña")]
         public string password { get; set; }
 
+        [Display(Name = "Horario")]
         public virtual Int32 horario_id { get; set; }
 
         [Display(Name = "Horario")]
@@ -67,6 +67,7 @@ namespace SRI.Models.ViewModels
             funcionarioVM.rol = (Rol)v.rol;
             funcionarioVM.horario_id = v.Horario.Id;
             funcionarioVM.horario_string = v.Horario.hora_inicio.ToString("HH:mm") + " - " + v.Horario.hora_fin.ToString("HH:mm");
+
 
             return funcionarioVM;
         }

@@ -12,6 +12,15 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.tipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tipo)
+        </dd>
+
+
+        <dt>
             @Html.DisplayNameFor(model => model.fecha_suceso)
         </dt>
 
@@ -28,6 +37,21 @@
         </dd>
 
         <dt>
+            Funcionario Creador
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Funcionario.ci)   @Html.DisplayFor(model => model.Funcionario.nombre)
+        </dd>
+
+        <dt>
+            Funcionario Ayudado
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FuncionarioAyudado.ci)   @Html.DisplayFor(model => model.FuncionarioAyudado.nombre)
+        </dd>
+
+
+        <dt>
             @Html.DisplayNameFor(model => model.emocion)
         </dt>
 
@@ -38,17 +62,15 @@
         <dt>
             @Html.DisplayNameFor(model => model.resolucion)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.resolucion)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.telefono_saliente)
+            @Html.DisplayNameFor(model => model.descripcion)
         </dt>
-
         <dd>
-            @Html.DisplayFor(model => model.telefono_saliente)
+            @Html.DisplayFor(model => model.descripcion)
         </dd>
 
         <dt>
@@ -75,13 +97,7 @@
             @Html.DisplayFor(model => model.hora_fin)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.nombre_persona_llama)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.nombre_persona_llama)
-        </dd>
 
     </dl>
 </div>

@@ -14,10 +14,8 @@ namespace SRI.Models
     
     public partial class IncidenteLlamado : Incidente
     {
-        public string telefono_saliente { get; set; }
         public string telefono_entrante { get; set; }
         public System.DateTime hora_inicio { get; set; }
         public System.DateTime hora_fin { get; set; }
-        public string nombre_persona_llama { get; set; }
     }
 }

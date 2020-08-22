@@ -15,7 +15,8 @@ namespace SRI.Models.ViewModels
 
     public partial class HorarioVM
     {
-    
+
+        [Display(Name = "Turno")]
         public int Id { get; set; }
 
         [Display(Name = "Hora inicio")]

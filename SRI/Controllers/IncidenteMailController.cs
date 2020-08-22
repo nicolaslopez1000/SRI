@@ -4,8 +4,10 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Web;
 using System.Web.Mvc;
+using SRI.Helpers;
 using SRI.Models;
 using SRI.Models.Enums;
 using SRI.Models.ViewModels;
@@ -17,12 +19,9 @@ namespace SRI.Controllers
     {
         private db_SRI db = new db_SRI();
 
-        // GET: IncidenteMail
-        public ActionResult Index()
-        {
-            return View(db.IncidentesMail.ToList());
-        }
+        private FuncionarioHelper fh = new FuncionarioHelper();
 
+       
         // GET: IncidenteMail/Details/5
         public ActionResult Details(int? id)
         {
@@ -49,7 +48,7 @@ namespace SRI.Controllers
         // POST: IncidenteMail/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,palabrasClave,resolucion,descripcion,tipo,asunto,respuesta,contenido,remitente,destinatarioCc,destinatarioTo")] IncidenteMailVM incidenteMailVM)
+        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,palabrasClave,resolucion,descripcion,tipo,asunto,respuesta,contenido,remitente,destinatarisoCc,destinatariosTo")] IncidenteMailVM incidenteMailVM)
         {
             string email = User.Identity.Name;
 
@@ -59,6 +58,7 @@ namespace SRI.Controllers
                 {
                     IncidenteMail incidenteMail = new IncidenteMail();
 
+                    incidenteMail.is_eliminado = false;
                     incidenteMail.fecha_suceso = incidenteMailVM.fecha_suceso;
                     incidenteMail.fecha_creacion = DateTime.Now;
                     incidenteMail.resolucion = incidenteMailVM.resolucion;
@@ -75,9 +75,35 @@ namespace SRI.Controllers
                     incidenteMail.remitente = incidenteMailVM.remitente;
 
                     incidenteMail.palabras_clave = incidenteMailVM.palabrasClave;
-                    incidenteMail. destinatariosCc = incidenteMailVM.destinatarioCc;
-                    incidenteMail.destinatariosTo = incidenteMailVM.destinatarioTo;
+                    incidenteMail. destinatariosCc = incidenteMailVM.destinatariosCc;
+                    incidenteMail.destinatariosTo = incidenteMailVM.destinatariosTo;
 
+
+                    string[] destinatariosToList = incidenteMailVM.destinatariosCc.Split(',');
+
+                    string[] destinatariosCcList = incidenteMailVM.destinatariosCc.Split(',');
+
+                    foreach( string destinatario in destinatariosCcList)
+                    {
+
+
+                        if (fh.GetFuncionarioByMail(destinatario) != null)
+                        {
+                            ModelState.AddModelError(string.Empty, "No existe ningún funcionario con el mail "+ destinatario +" , confirmela con el funcionario que se comunicó");
+
+                        }
+
+                    }
+
+                    foreach (string destinatario in destinatariosCcList)
+                    {
+                        if (fh.GetFuncionarioByMail(destinatario) != null)
+                        {
+                            ModelState.AddModelError(string.Empty, "No existe ningún funcionario con el mail " + destinatario + " , confirmela con el funcionario que se comunicó");
+
+                        }
+
+                    }
 
                     if (ModelState.IsValid)
                     {
