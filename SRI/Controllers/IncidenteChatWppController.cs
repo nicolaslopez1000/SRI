@@ -51,7 +51,7 @@ namespace SRI.Controllers
         // POST: IncidenteChatWpp/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,tipo,respuesta,telefono_entrante,telefono_saliente,nombre_persona_escribe,palabrasClave,funcionario_ayudado_ci")] IncidenteChatWppVM incidenteChatWppVM)
+        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,tipo,respuesta,telefono_entrante,palabrasClave,funcionario_ayudado_ci")] IncidenteChatWppVM incidenteChatWppVM)
         {
             string email = User.Identity.Name;
 
@@ -72,10 +72,15 @@ namespace SRI.Controllers
                     Funcionario funcionario = context.Funcionario.FirstOrDefault(a => a.mail.Equals(email));
                     incidenteChatWpp.Funcionario = funcionario;
 
-                    Funcionario funcionarioAyudado = context.Funcionario.Find(incidenteChatWppVM.funcionario_ayudado_ci);
+
+
+                    Funcionario funcionarioAyudado = context.Funcionario.Find();
                     incidenteChatWpp.FuncionarioAyudado = funcionarioAyudado;
 
-
+                    if (funcionarioAyudado == null )
+                    {
+                        ModelState.AddModelError(string.Empty, "No existe ningún funcionario con esa cedula , confirmela con el funcionario que se comunicó");
+                    }
 
                     incidenteChatWpp.telefono_entrante = incidenteChatWppVM.telefono_entrante;
                     incidenteChatWpp.respuesta = incidenteChatWppVM.respuesta;
@@ -83,8 +88,7 @@ namespace SRI.Controllers
 
                     incidenteChatWpp.palabras_clave = incidenteChatWppVM.palabrasClave;
 
-                    if (funcionarioAyudado != null)
-                    {
+                    
                         if (ModelState.IsValid)
                         {
                             context.IncidentesChatWpp.Add(incidenteChatWpp);
@@ -93,11 +97,7 @@ namespace SRI.Controllers
                             return RedirectToAction("Index", "Incidente");
                         }
 
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "No existe ningún funcionario con esa cedula , confirmela con el funcionario que se comunicó");
-                    }
+                    
 
 
                    
@@ -131,7 +131,7 @@ namespace SRI.Controllers
         // POST: IncidenteChatWpp/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,respuesta,telefono_entrante,palabrasClave")] IncidenteChatWppVM incidenteChatWppVM)
+        public ActionResult Edit([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,tipo,respuesta,telefono_entrante,palabrasClave,funcionario_ayudado_ci")] IncidenteChatWppVM incidenteChatWppVM)
         {
 
             using (db_SRI context = new db_SRI())
@@ -141,11 +141,9 @@ namespace SRI.Controllers
 
 
                     IncidenteChatWpp incidenteChatWpp = context.IncidentesChatWpp.Find(incidenteChatWppVM.Id);
-
-                    
+                                        
                     incidenteChatWpp.resolucion = incidenteChatWppVM.resolucion;
                     incidenteChatWpp.descripcion = incidenteChatWppVM.descripcion;
-                    incidenteChatWpp.telefono_entrante = incidenteChatWppVM.telefono_entrante;
                     incidenteChatWpp.respuesta = incidenteChatWppVM.respuesta;
 
 
@@ -164,32 +162,7 @@ namespace SRI.Controllers
 
         }
 
-        // GET: IncidenteChatWpp/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            IncidenteChatWpp incidenteChatWpp = db.IncidentesChatWpp.Find(id);
-            if (incidenteChatWpp == null)
-            {
-                return HttpNotFound();
-            }
-            return View(incidenteChatWpp);
-        }
-
-        // POST: IncidenteChatWpp/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            IncidenteChatWpp incidenteChatWpp = db.IncidentesChatWpp.Find(id);
-            db.Incidente.Remove(incidenteChatWpp);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

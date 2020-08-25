@@ -13,7 +13,15 @@ namespace SRI.Helpers
 
         public IEnumerable<SelectListItem> GetListaHorarios(int selectedItem = -1)
         {
-            List<Horario> listaHorarios = db.Horario.Where(x => x.is_eliminado == false).ToList();
+            List<Horario> listaHorarios = new List<Horario>();
+
+            using (db_SRI db = new db_SRI())
+            {
+
+                listaHorarios = db.Horario.Where(x => x.is_eliminado == false).ToList();
+
+
+            }
 
             List<SelectListItem> horariosDropDown = new List<SelectListItem>();
 
@@ -44,13 +52,15 @@ namespace SRI.Helpers
 
         public Funcionario GetFuncionarioByMail(String mail)
         {
-
-            var obj = db.Funcionario.Where(a => a.mail.Equals(mail)).FirstOrDefault();
-
-            return obj;
+            Funcionario funcionario = new Funcionario();
+            using (db_SRI db = new db_SRI())
+            {
+                funcionario = db.Funcionario.Include("Horario").Where(a => a.mail.Equals(mail)).FirstOrDefault();
+            }
+            return funcionario;
         }
 
-
+        
 
     }
 }

@@ -78,28 +78,26 @@ namespace SRI.Controllers
                     Funcionario funcionarioAyudado = context.Funcionario.Find(incidenteLlamadoVM.funcionario_ayudado_ci);
                     incidenteLlamado.FuncionarioAyudado = funcionarioAyudado;
 
+                    if (funcionarioAyudado == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "No existe ningún funcionario con esa cedula , confirmela con el funcionario que se comunicó");
+                    }
+
                     incidenteLlamado.hora_fin = incidenteLlamadoVM.hora_fin;
                     incidenteLlamado.hora_inicio = incidenteLlamadoVM.hora_inicio;
 
 
                     incidenteLlamado.palabras_clave = incidenteLlamadoVM.palabrasClave;
 
-                    if (funcionarioAyudado != null)
-                    {
+                  
                         if (ModelState.IsValid)
                         {
                             context.IncidentesLlamado.Add(incidenteLlamado);
                             context.SaveChanges();
                             dbContextTransaction.Commit();
-                            return RedirectToAction("Index");
+                            return RedirectToAction("Index","Incidente");
                         }
-                    }
-                    else
-                    {
-
-                        ModelState.AddModelError(string.Empty, "No existe ningún funcionario con esa cedula , confirmela con el funcionario que se comunicó");
-
-                    }
+                    
 
                 }
             }
@@ -122,49 +120,30 @@ namespace SRI.Controllers
 
             IncidenteLlamadoVM incidenteLlamadoVM = (IncidenteLlamadoVM)incidenteLlamado;
 
-            return View(incidenteLlamado);
+            return View(incidenteLlamadoVM);
         }
 
         // POST: IncidenteLlamado/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,telefono_saliente,telefono_entrante,hora_inicio,hora_fin,nombre_persona_llama")] IncidenteLlamado incidenteLlamado)
+        public ActionResult Edit([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,telefono_entrante,hora_inicio,hora_fin,palabrasClave,funcionario_ayudado_ci")] IncidenteLlamadoVM incidenteLlamadoVM)
         {
+            IncidenteLlamado incidenteLlamado = new IncidenteLlamado();
+
             if (ModelState.IsValid)
             {
+                incidenteLlamado = db.IncidentesLlamado.Find(incidenteLlamadoVM.Id);
+                incidenteLlamado.descripcion = incidenteLlamadoVM.descripcion;
+                incidenteLlamado.resolucion = incidenteLlamadoVM.resolucion;
+
                 db.Entry(incidenteLlamado).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Incidente");
             }
             return View(incidenteLlamado);
         }
 
-        // GET: IncidenteLlamado/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            IncidenteLlamado incidenteLlamado = db.IncidentesLlamado.Find(id);
-            if (incidenteLlamado == null)
-            {
-                return HttpNotFound();
-            }
-            return View(incidenteLlamado);
-        }
-
-        // POST: IncidenteLlamado/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            IncidenteLlamado incidenteLlamado = db.IncidentesLlamado.Find(id);
-            db.IncidentesLlamado.Remove(incidenteLlamado);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

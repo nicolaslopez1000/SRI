@@ -65,7 +65,10 @@ namespace SRI.Models.ViewModels
             incidenteVM.palabrasClave = incidente.palabras_clave;
             incidenteVM.Funcionario = (FuncionarioVM)incidente.Funcionario;
 
-            incidenteVM.FuncionarioAyudado = (FuncionarioVM)incidente.FuncionarioAyudado;
+            if (incidente.FuncionarioAyudado != null)
+            {
+                incidenteVM.FuncionarioAyudado = (FuncionarioVM)incidente.FuncionarioAyudado;
+            }
 
             return incidenteVM;
         }

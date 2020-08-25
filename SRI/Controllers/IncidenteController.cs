@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -20,7 +21,7 @@ namespace SRI.Controllers
 
         private IncidenteHelper ih = new IncidenteHelper();
 
-        public ActionResult GetPartialIncidentes(string ciFuncionario)
+        public ActionResult GetPartialIncidentes()
         {
 
             List<Incidente> listaIncidentes = db.Incidente.Where(x => x.is_eliminado == false).ToList();

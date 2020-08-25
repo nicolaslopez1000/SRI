@@ -34,7 +34,6 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Incidentes", "Index", "Incidente")</li>
                     <li>@Html.ActionLink("Reportes", "Contact", "Home")</li>
                     @if (funcionario != null && funcionario.rol == SRI.Models.Enums.Rol.admin)
@@ -52,9 +51,13 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year -Sistema de registro de incidentes</p>
-        </footer>
+
+        <div style="bottom:0;position: fixed; width:100%;">
+            <hr style="width:100%;" />
+            <footer>
+                <p>&copy; @DateTime.Now.Year -Sistema de registro de incidentes</p>
+            </footer>
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
@@ -99,8 +102,6 @@
 
         }
 
-
-
         $(document).on("click", "button.remove", function () {
 
             $(this).parent().remove();
@@ -140,6 +141,19 @@
         });
 
 
+        function cargarFiltradoView() {
+
+            $.ajax({
+                type: "GET",
+                url: "/Filtrado/GetPartialIncidentes",
+                data: { "ciFuncionario": "32499251" },
+                success: function (data) {
+                    $('#IncidentesPartial').html(data);
+                },
+            });
+
+
+       }
 
 
     </script>

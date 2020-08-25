@@ -45,8 +45,18 @@ namespace Web.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,hora_inicio,hora_fin")] Horario horario)
+        public ActionResult Create([Bind(Include = "Id,hora_inicio,hora_fin")] HorarioVM horarioVM)
         {
+
+            Horario horario = new Horario();
+
+            horario.hora_inicio = horarioVM.hora_inicio;
+
+            horario.hora_fin = horarioVM.hora_fin;
+
+            horario.is_eliminado = false;
+
+         
             if (ModelState.IsValid)
             {
                 db.Horario.Add(horario);
@@ -54,7 +64,7 @@ namespace Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View(horario);
+            return View(horarioVM);
         }
 
         // GET: Horario/Edit/5
@@ -69,8 +79,8 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
-            HorarioVM horarioVM = (HorarioVM)horario;
-            return View(horarioVM);
+
+            return View((HorarioVM)horario);
         }
 
         // POST: Horario/Edit/5
@@ -79,16 +89,17 @@ namespace Web.Controllers
         public ActionResult Edit([Bind(Include = "Id,hora_inicio,hora_fin")] HorarioVM horarioVM)
         {
 
-            using (db_SRI context = new db_SRI())
+
+             using (db_SRI context = new db_SRI())
             {
-                Horario horario = db.Horario.Find(horarioVM.Id);
+                Horario horario = context.Horario.Find(horarioVM.Id);
 
                 horario.hora_fin = horarioVM.hora_fin;
                 horario.hora_inicio = horarioVM.hora_inicio;
 
                 if (ModelState.IsValid)
                 {
-                    db.SaveChanges();
+                    context.SaveChanges();
                     return RedirectToAction("Index");
                 }
             }

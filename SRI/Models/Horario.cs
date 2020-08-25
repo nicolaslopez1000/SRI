@@ -11,7 +11,8 @@ namespace SRI.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Horario
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,10 +20,20 @@ namespace SRI.Models
         {
             this.Funcionario = new HashSet<Funcionario>();
         }
-    
+
+
+        [Display(Name = "Turno")]
         public int Id { get; set; }
+
+        [Display(Name = "Hora inicio")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
+        [DataType(DataType.Time)]
         public System.DateTime hora_inicio { get; set; }
+        [Display(Name = "Hora fin")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
+        [DataType(DataType.Time)]
         public System.DateTime hora_fin { get; set; }
+
         public Nullable<bool> is_eliminado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -20,6 +20,8 @@ namespace SRI.Models.ViewModels
         [Display(Name = "Tipo de incidente")]
         public TipoIncidente tipoIncidente { get; set; }
 
+        public bool isEliminado { get; set; }
+
 
     }
 }

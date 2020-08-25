@@ -43,13 +43,14 @@
     <script>
 
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: "/Incidente/GetPartialIncidentes",
             data: { "ciFuncionario": "32499251" },
             success: function (data) {
                 $('#ListadoIncidentes').html(data);
             },
         });
+
 
         function cargarViewTipoIncidente() {
 

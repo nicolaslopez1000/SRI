@@ -1,0 +1,40 @@
+﻿@model SRI.Models.ViewModels.FiltradoVM
+
+@{
+    ViewBag.Title = "Reportes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("FiltradoDiaTotal", "Filtrado"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h3>Filtrado de incidente por mes mostrando las emociones por día y total en el mes</h3>
+        <br />
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mes, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mes, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mes, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+      
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input onclick="cargarFiltradoView()" value="Cargar" class="btn btn-default" />
+        </div>
+    </div>
+
+
+    @Html.Partial("Incidente/_listado")
+
+

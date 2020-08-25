@@ -45,6 +45,9 @@ namespace SRI.Models.ViewModels
             incidenteLlamadoVM.descripcion = incidenteLlamado.descripcion;
             incidenteLlamadoVM.tipo = (TipoIncidente)incidenteLlamado.tipo;
             incidenteLlamadoVM.Funcionario = (FuncionarioVM)incidenteLlamado.Funcionario;
+            incidenteLlamadoVM.Id = incidenteLlamado.Id;
+
+            incidenteLlamadoVM.palabrasClave = incidenteLlamado.palabras_clave;
 
             incidenteLlamadoVM.telefono_entrante = incidenteLlamado.telefono_entrante;
             incidenteLlamadoVM.hora_inicio = incidenteLlamado.hora_inicio;

@@ -12,12 +12,7 @@ namespace SRI.Models.Enums
         neutral = 0,
         negativo = -1
     }
-    public enum TipoEmail : int
-    {
-        to = 2,
-        cc = 1
-    }
-
+  
     public enum TipoIncidente : int
     {
         [Display(Name = "Común")]

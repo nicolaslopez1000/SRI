@@ -5,23 +5,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+    <h2>
+        Editar Incidente de tipo Chat de Whatsapp
+    </h2>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Edit</title>
-</head>
-<body>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Incidente de tipo Chat de Whatsapp</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.tipo)
+        @Html.HiddenFor(model => model.fecha_suceso)
+        @Html.HiddenFor(model => model.emocion)
+        @Html.HiddenFor(model => model.funcionario_ayudado_ci)
+        @Html.HiddenFor(model => model.telefono_entrante)
+        @Html.HiddenFor(model => model.palabrasClave)
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.tipo, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -45,14 +48,15 @@
         </div>
 
         <div class="form-group">
-            Funcionario Ayudado
+            <label class="control-label col-md-2" for="FuncionarioAyudado"> Funcionario Ayudado</label>
             <div class="col-md-10">
                 @Html.DisplayFor(model => model.FuncionarioAyudado.ci)   @Html.DisplayFor(model => model.FuncionarioAyudado.nombre)
             </div>
         </div>
 
         <div class="form-group">
-            Funcionario Creador
+            <label class="control-label col-md-2" for="FuncionarioCreador"> Funcionario Creador</label>
+
             <div class="col-md-10">
                 @Html.DisplayFor(model => model.Funcionario.ci)   @Html.DisplayFor(model => model.Funcionario.nombre)
             </div>
@@ -101,8 +105,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.telefono_entrante, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.telefono_entrante, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.telefono_entrante, "", new { @class = "text-danger" })
+                @Html.DisplayFor(model => model.telefono_entrante, new { htmlAttributes = new { @class = "form-control" } })
             </div>
         </div>
 
@@ -114,10 +117,8 @@
             </div>
         </div>
     </div>
-    }
+}
 
 <div>
     @Html.ActionLink("Volver a el menú de incidentes", "Index", "Incidente")
 </div>
-</body>
-</html>

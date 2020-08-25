@@ -31,15 +31,13 @@ namespace SRI.Models.ViewModels
         [DataType(DataType.MultilineText)]
         public string contenido { get; set; }
 
-        [Required(ErrorMessage = "Ingrese la respuesta del mail")]
+        [Required(ErrorMessage = "Ingrese el remitente del mail")]
         [Display(Name = "Remitente")]
         public string remitente { get; set; }
 
-        [Required(ErrorMessage = "Ingrese la respuesta del mail")]
         [Display(Name = "Destinatarios To")]
         public string destinatariosTo { get; set; }
 
-        [Required(ErrorMessage = "Ingrese la respuesta del mail")]
         [Display(Name = "Destinatarios Cc")]
         public string destinatariosCc { get; set; }
 
@@ -57,6 +55,7 @@ namespace SRI.Models.ViewModels
             incidenteMailVM.tipo = (TipoIncidente)incidenteMail.tipo;
             incidenteMailVM.Funcionario = (FuncionarioVM)incidenteMail.Funcionario;
             incidenteMailVM.palabrasClave = incidenteMail.palabras_clave;
+            incidenteMailVM.Id = incidenteMail.Id;
 
             incidenteMailVM.destinatariosCc = incidenteMail.destinatariosCc;
             incidenteMailVM.destinatariosTo = incidenteMail.destinatariosTo;

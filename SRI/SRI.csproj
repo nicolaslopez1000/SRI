@@ -243,6 +243,7 @@
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -363,15 +364,17 @@
     <Content Include="Views\Shared\_PalabrasClave.cshtml" />
     <Content Include="Views\Horario\Create.cshtml" />
     <Content Include="Views\Horario\Delete.cshtml" />
-    <Content Include="Views\Horario\Edit.cshtml" />
     <Content Include="Views\Horario\Index.cshtml" />
     <Content Include="Views\Funcionario\Create.cshtml" />
     <Content Include="Views\Funcionario\Delete.cshtml" />
     <Content Include="Views\Funcionario\Details.cshtml" />
     <Content Include="Views\Funcionario\Edit.cshtml" />
     <Content Include="Views\Funcionario\Index.cshtml" />
-    <Content Include="Views\Filtrado\Filtrado.cshtml" />
+    <Content Include="Views\Filtrado\FiltradoPorMesTipoIncidente.cshtml" />
     <Content Include="Views\Incidente\_Incidentes.cshtml" />
+    <Content Include="Views\Filtrado\FiltradoPorMesFuncionario.cshtml" />
+    <Content Include="Views\Filtrado\FiltradoPorMesDiaTotal.cshtml" />
+    <Content Include="Views\Horario\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

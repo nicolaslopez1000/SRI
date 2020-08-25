@@ -20,9 +20,11 @@ namespace SRI.Models.ViewModels
         public int Id { get; set; }
 
         [Display(Name = "Hora inicio")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
         [DataType(DataType.Time)]
         public System.DateTime hora_inicio { get; set; }
         [Display(Name = "Hora fin")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
         [DataType(DataType.Time)]
         public System.DateTime hora_fin { get; set; }
 

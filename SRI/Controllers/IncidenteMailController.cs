@@ -36,7 +36,7 @@ namespace SRI.Controllers
             }
             IncidenteMailVM incidenteMailVM = (IncidenteMailVM)incidenteMail;
 
-            return View(incidenteMail);
+            return View(incidenteMailVM);
         }
 
         // GET: IncidenteMail/Create
@@ -48,7 +48,7 @@ namespace SRI.Controllers
         // POST: IncidenteMail/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,palabrasClave,resolucion,descripcion,tipo,asunto,respuesta,contenido,remitente,destinatarisoCc,destinatariosTo")] IncidenteMailVM incidenteMailVM)
+        public ActionResult Create([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,palabrasClave,resolucion,descripcion,tipo,asunto,respuesta,contenido,remitente,destinatariosCc,destinatariosTo,funcionario_ayudado_ci")] IncidenteMailVM incidenteMailVM)
         {
             string email = User.Identity.Name;
 
@@ -78,31 +78,41 @@ namespace SRI.Controllers
                     incidenteMail. destinatariosCc = incidenteMailVM.destinatariosCc;
                     incidenteMail.destinatariosTo = incidenteMailVM.destinatariosTo;
 
-
-                    string[] destinatariosToList = incidenteMailVM.destinatariosCc.Split(',');
-
-                    string[] destinatariosCcList = incidenteMailVM.destinatariosCc.Split(',');
-
-                    foreach( string destinatario in destinatariosCcList)
+                    if (string.IsNullOrEmpty(incidenteMailVM.destinatariosCc) && string.IsNullOrEmpty(incidenteMailVM.destinatariosTo))
                     {
-
-
-                        if (fh.GetFuncionarioByMail(destinatario) != null)
-                        {
-                            ModelState.AddModelError(string.Empty, "No existe ningún funcionario con el mail "+ destinatario +" , confirmela con el funcionario que se comunicó");
-
-                        }
-
+                        ModelState.AddModelError(string.Empty, "Debes agregar al menos un destinatario, ya sea cc o to");
                     }
-
-                    foreach (string destinatario in destinatariosCcList)
+                    else
                     {
-                        if (fh.GetFuncionarioByMail(destinatario) != null)
-                        {
-                            ModelState.AddModelError(string.Empty, "No existe ningún funcionario con el mail " + destinatario + " , confirmela con el funcionario que se comunicó");
+                        if (!string.IsNullOrEmpty(incidenteMailVM.destinatariosTo)) 
+                        { 
+                            string[] destinatariosToList = incidenteMailVM.destinatariosTo.Split(',');
 
+                            foreach (string destinatario in destinatariosToList)
+                            {
+                                Funcionario fun = fh.GetFuncionarioByMail(destinatario);
+                                if ( fun == null)
+                                {
+                                    ModelState.AddModelError(string.Empty, "No existe ningún funcionario con el mail " + destinatario + " , confirmela con el funcionario que se comunicó");
+
+                                }
+                            }
                         }
 
+                        if (!string.IsNullOrEmpty(incidenteMailVM.destinatariosCc))
+                        {
+                            string[] destinatariosCcList = incidenteMailVM.destinatariosTo.Split(',');
+
+                            foreach (string destinatario in destinatariosCcList)
+                            {
+                                Funcionario fun = fh.GetFuncionarioByMail(destinatario);
+                                if (fun == null)
+                                {
+                                    ModelState.AddModelError(string.Empty, "No existe ningún funcionario con el mail " + destinatario + " , confirmela con el funcionario que se comunicó");
+                                }
+                            }
+                        }
+                        
                     }
 
                     if (ModelState.IsValid)
@@ -110,7 +120,7 @@ namespace SRI.Controllers
                         context.IncidentesMail.Add(incidenteMail);
                         context.SaveChanges();
                         dbContextTransaction.Commit();
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", "Incidente");
                     }
 
                 }
@@ -131,49 +141,34 @@ namespace SRI.Controllers
             {
                 return HttpNotFound();
             }
-            return View(incidenteMail);
+
+            IncidenteMailVM incidenteMailVM = (IncidenteMailVM)incidenteMail;
+
+            return View(incidenteMailVM);
         }
 
         // POST: IncidenteMail/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,tipo,asunto,respuesta,contenido,remitente")] IncidenteMail incidenteMail)
+        public ActionResult Edit([Bind(Include = "Id,fecha_suceso,fecha_creacion,emocion,resolucion,descripcion,tipo,asunto,respuesta,contenido,remitente")] IncidenteMailVM incidenteMailVM)
         {
+            IncidenteMail incidenteMail = new IncidenteMail();
+
             if (ModelState.IsValid)
             {
+                incidenteMail = db.IncidentesMail.Find(incidenteMailVM.Id);
+                incidenteMail.descripcion = incidenteMailVM.descripcion;
+                incidenteMail.asunto = incidenteMailVM.asunto;
+                incidenteMail.respuesta = incidenteMailVM.respuesta;
+                incidenteMail.contenido = incidenteMailVM.contenido;
+
                 db.Entry(incidenteMail).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Incidente");
             }
             return View(incidenteMail);
         }
-
-        // GET: IncidenteMail/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            IncidenteMail incidenteMail = db.IncidentesMail.Find(id);
-            if (incidenteMail == null)
-            {
-                return HttpNotFound();
-            }
-            return View(incidenteMail);
-        }
-
-        // POST: IncidenteMail/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            IncidenteMail incidenteMail = db.IncidentesMail.Find(id);
-            db.IncidentesMail.Remove(incidenteMail);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
+    
         protected override void Dispose(bool disposing)
         {
             if (disposing)

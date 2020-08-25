@@ -39,6 +39,10 @@ namespace SRI.Models.ViewModels
             incidenteChatWppVM.palabrasClave = incidenteChatWpp.palabras_clave;
             incidenteChatWppVM.Funcionario = (FuncionarioVM)incidenteChatWpp.Funcionario;
             incidenteChatWppVM.FuncionarioAyudado = (FuncionarioVM)incidenteChatWpp.FuncionarioAyudado;
+            incidenteChatWppVM.funcionario_ayudado_ci = incidenteChatWpp.FuncionarioAyudado.ci;
+            incidenteChatWppVM.palabrasClave = incidenteChatWpp.palabras_clave;
+            incidenteChatWppVM.Id = incidenteChatWpp.Id;
+
 
             incidenteChatWppVM.telefono_entrante = incidenteChatWpp.telefono_entrante;
             incidenteChatWppVM.respuesta = incidenteChatWpp.respuesta;
