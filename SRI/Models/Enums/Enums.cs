@@ -15,7 +15,7 @@ namespace SRI.Models.Enums
   
     public enum TipoIncidente : int
     {
-        [Display(Name = "Común")]
+        [Display(Name = "Cualquier tipo")]
         comun = 0,
         [Display(Name = "Mail")]
         mail = 1,

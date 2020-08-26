@@ -7,12 +7,10 @@
 
 
 
-@using (Html.BeginForm("Filtrado", "Filtrado"))
-{
-    @Html.AntiForgeryToken()
+
 
     <div class="form-horizontal">
-        <h3>Nuevo Incidente de tipo Chat de WhatsApp</h3>
+        <h3>Filtrado de incidente por mes, y por tipo</h3>
         <br />
 
 
@@ -20,8 +18,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.mes, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.mes, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mes, "", new { @class = "text-danger" })
+                <input type="month" id="mes" name="mes">
             </div>
         </div>
 
@@ -37,12 +34,48 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Cargar" class="btn btn-default" />
+            <input onclick="cargarFiltrado()" value="Cargar" class="btn btn-default" />
         </div>
     </div>
 
+    <br />
+    <br />
+    <br />
 
     <div id="IncidentesPartial">
-        @Html.Partial("Incidente/_listado")
+
+
     </div>
 
+    <button type="button" class="btn btn-danger  print" value="IncidentesPartial">Imprimir</button>
+
+@section Scripts{
+<script>
+
+    function cargarFiltrado() {
+
+        var mes = $("#mes").val()
+        var tipoIncidente = $('select[id=tipoIncidente] option').filter(':selected').val();
+
+
+        dat = {
+            mes : mes,
+            tipoIncidente: tipoIncidente
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Filtrado/GetFiltradoPorMesTipoIncidente",
+            data: dat,
+            success: function (data) {
+                $('#IncidentesPartial').html(data);
+            }
+
+        });
+
+    }
+
+</script>
+
+
+}

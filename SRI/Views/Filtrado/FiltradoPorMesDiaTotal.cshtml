@@ -7,34 +7,59 @@
 
 
 
-@using (Html.BeginForm("FiltradoDiaTotal", "Filtrado"))
-{
-    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h3>Filtrado de incidente por mes mostrando las emociones por día y total en el mes</h3>
-        <br />
+<div class="form-horizontal">
+    <h3>Filtrado de incidente por mes mostrando las emociones por día y total en el mes</h3>
+    <br />
 
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.mes, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mes, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mes, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-      
-    </div>
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input onclick="cargarFiltradoView()" value="Cargar" class="btn btn-default" />
+        @Html.LabelFor(model => model.mes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="month" id="mes" name="mes">
         </div>
     </div>
 
+</div>
 
-    @Html.Partial("Incidente/_listado")
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input onclick="cargarFiltrado()" value="Cargar" class="btn btn-default" />
+    </div>
+</div>
+<br />
+<br />
+<hr />
+<div id="IncidentesPartial">
+</div>
 
+<button type="button" class="btn btn-danger  print" value="IncidentesPartial">Imprimir</button>
+
+@section Scripts{
+    <script>
+
+        function cargarFiltrado() {
+
+            var mes = $("#mes").val()
+
+            dat = {
+                mes: mes
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Filtrado/GetFiltradoPorMesDiaTotal",
+                data: dat,
+                success: function (data) {
+                    $('#IncidentesPartial').html(data);
+                }
+
+            });
+
+        }
+
+    </script>
+
+
+}
 

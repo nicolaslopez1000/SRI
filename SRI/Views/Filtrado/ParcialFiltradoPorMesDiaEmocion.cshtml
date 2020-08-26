@@ -1,0 +1,75 @@
+﻿@model SRI.Models.ViewModels.FiltradoPorMesDiaTotalModelView
+
+
+
+    <div>
+        <h3> Total en el mes</h3>
+        <hr />
+        <dl class="dl-horizontal">
+
+            <dt>
+                Total positivos
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.totalNegativos)
+            </dd>
+
+            <dt>
+                Total neutros
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.totalNeutros)
+            </dd>
+
+            <dt>
+                Total negativos
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.totalNegativos)
+            </dd>
+        </dl>
+
+        <hr />
+        <h3> Totales discriminados por día</h3>
+        <table class="table">
+            <tr>
+                <th>
+                    Fecha
+                </th>
+                <th>
+                    Cantidad Positivos
+                </th>
+                <th>
+                    Cantidad Neutros
+                </th>
+                <th>
+                    Cantidad Negativos
+                </th>
+            </tr>
+
+            @foreach (var item in Model.listaIncidentesGroupedByDay)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cantidadPositivos)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cantidadNeutrales)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cantidadNegativos)
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+
+    </div>
+

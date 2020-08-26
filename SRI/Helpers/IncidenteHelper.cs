@@ -17,55 +17,40 @@ namespace SRI.Helpers
             List<IncidenteVM> listIncidentesVM = new List<IncidenteVM>();
             List<Incidente> listIncidentes = new List<Incidente>();
 
-           
-            if (string.IsNullOrEmpty(filtro.ciFuncionario))
+            using (db_SRI db = new db_SRI())
             {
-                if( filtro.tipoIncidente == TipoIncidente.comun)
+                if (string.IsNullOrEmpty(filtro.funcionario_ci))
                 {
-
-                    listIncidentes =  GetIncidentesByMonth(filtro.mes); 
+                    if (filtro.tipoIncidente == TipoIncidente.comun)
+                    {
+                        listIncidentes = GetIncidentesByMonth(filtro.mes);
+                    }
+                    else
+                    {
+                       listIncidentes = GetIncidentesByMonth(filtro.mes).Where(a => a.tipo == (int)filtro.tipoIncidente).ToList();
+                    }
 
                 }
                 else
                 {
-                    using (db_SRI db = new db_SRI())
+
+                    if (filtro.tipoIncidente == TipoIncidente.comun)
                     {
-                        listIncidentes = GetIncidentesByMonth(filtro.mes).Where(a => a.tipo == (int)filtro.tipoIncidente).ToList();
+                        listIncidentes = GetIncidentesByMonth(filtro.mes).Where(a => a.Funcionario.ci == filtro.funcionario_ci).ToList(); 
                     }
-
-                }
-
-            }
-            else
-            {
-
-                if (filtro.tipoIncidente == TipoIncidente.comun)
-                {
-
-                    listIncidentes = GetIncidentesByMonth(filtro.mes).Where(a => a.Funcionario.ci == filtro.ciFuncionario).ToList(); ;
-
-                }
-                else
-                {
-                    using (db_SRI db = new db_SRI())
+                    else
                     {
-                        listIncidentes = GetIncidentesByMonth(filtro.mes).Where(a => a.tipo == (int)filtro.tipoIncidente && a.Funcionario.ci == filtro.ciFuncionario).ToList();
+                        listIncidentes = GetIncidentesByMonth(filtro.mes).Where(a => a.tipo == (int)filtro.tipoIncidente && a.Funcionario.ci == filtro.funcionario_ci).ToList();
                     }
-
                 }
 
-                foreach( Incidente incidente in listIncidentes)
+                foreach (Incidente incidente in listIncidentes)
                 {
 
                     IncidenteVM incidenteVM = (IncidenteVM)incidente;
                     listIncidentesVM.Add(incidenteVM);
-
-
                 }
-
             }
-
-            
 
             return listIncidentesVM;
 
@@ -82,7 +67,11 @@ namespace SRI.Helpers
 
             using (db_SRI db = new db_SRI())
             {
-                listIncidentes = db.Incidente.Where(a => a.fecha_creacion > firstDayOfMonth && a.fecha_creacion < lastDayOfMonth).ToList();
+                listIncidentes = db.Incidente
+                    .Include("Funcionario.Horario")
+                    .Include("FuncionarioAyudado.Horario")
+                    .Where(a => a.fecha_creacion > firstDayOfMonth && a.fecha_creacion < lastDayOfMonth)
+                    .ToList();
             }
 
             return listIncidentes;

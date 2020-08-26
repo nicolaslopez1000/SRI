@@ -11,17 +11,13 @@ namespace SRI.Models.ViewModels
     {
 
         [Display(Name = "Mes de filtrado")]
-        [DisplayFormat(DataFormatString = "{0:MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime mes { get; set; }
 
         [Display(Name = "Cedula funcionario")]
-        public string ciFuncionario { get; set; }
+        public string funcionario_ci { get; set; }
 
         [Display(Name = "Tipo de incidente")]
         public TipoIncidente tipoIncidente { get; set; }
-
-        public bool isEliminado { get; set; }
-
 
     }
 }

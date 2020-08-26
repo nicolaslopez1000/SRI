@@ -35,12 +35,22 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Incidentes", "Index", "Incidente")</li>
-                    <li>@Html.ActionLink("Reportes", "Contact", "Home")</li>
                     @if (funcionario != null && funcionario.rol == SRI.Models.Enums.Rol.admin)
                     {
                         <li>@Html.ActionLink("Horarios", "Index", "Horario")</li>
                         <li>@Html.ActionLink("Funcionarios", "Index", "Funcionario")</li>
                     }
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            Reportes
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Por mes y cantidad de cada emoción", "FiltradoPorMesDiaTotal", "Filtrado")</li>
+                            <li>@Html.ActionLink("Por mes y por tipo de incidente", "FiltradoPorMesTipoIncidente", "Filtrado")</li>
+                            <li>@Html.ActionLink("Por mes y por funcionario", "FiltradoPorMesFuncionario", "Filtrado")</li>
+                        </ul>
+                    </li>
 
 
                 </ul>
@@ -53,7 +63,7 @@
         <hr />
 
         <div style="bottom:0;position: fixed; width:100%;">
-            <hr style="width:100%;" />
+            
             <footer>
                 <p>&copy; @DateTime.Now.Year -Sistema de registro de incidentes</p>
             </footer>

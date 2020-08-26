@@ -9,38 +9,98 @@
 
 
 
-    <div class="form-horizontal">
-        <h3> Filtrado por mes y por funcionario</h3>
-            <br />
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.mes, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.mes, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.mes, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ciFuncionario, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ciFuncionario, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ciFuncionario, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-
-    </div>
+<div class="form-horizontal">
+    <h3> Filtrado por mes y por funcionario</h3>
+    <br />
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input onclick="cargarFiltradoView()" value="Cargar" class="btn btn-default" />
+        @Html.LabelFor(model => model.mes, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <input type="month" id="mes" name="mes">
         </div>
     </div>
 
-    <div id="IncidentesPartial">
-        @Html.Partial("Incidente/_listado")
+    <div class="form-group">
+        @Html.LabelFor(model => model.funcionario_ci, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.funcionario_ci, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.funcionario_ci, "", new { @class = "text-danger" })
+        </div>
     </div>
+
+
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input onclick="cargarFiltrado()" value="Cargar" class="btn btn-default" />
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+
+<div id="resultadosDiv" hidden>
+    <h4> Incidentes Mail</h4>
+    <div id="IncidentesPartialMail">
+    </div>
+    <hr />
+    <h4> Incidentes Chat de WhatsApp</h4>
+    <div id="IncidentesPartialWpp">
+    </div>
+    <hr />
+    <h4> Incidentes Llamado</h4>
+    <div id="IncidentesPartialLlamado">
+    </div>
+
+    <hr />
+    <div id="datosReporte"></div>
+    <hr />
+</div>
+<br />
+<br />
+
+<button type="button" class="btn btn-danger  print" value="resultadosDiv">Imprimir</button>
+
+@section Scripts{
+    <script>
+
+        function cargarFiltrado() {
+
+            var mes = $("#mes").val()
+            var funcionario_ci = $("#funcionario_ci").val()
+
+
+            dat = {
+                mes: mes,
+                funcionario_ci: funcionario_ci
+            }
+
+            $("#datosReporte").html("Mes de busqueda: " + mes + "  Cedula del Funcionario filtrado: " + funcionario_ci)
+
+            $.ajax({
+                type: "POST",
+                url: "/Filtrado/GetFiltradoPorMesFuncionario",
+                data: dat,
+                success: function (data) {
+                    $('#resultadosDiv').show();
+
+                    $('#IncidentesPartialMail').html(data.mailStringView);
+
+                    $('#IncidentesPartialWpp').html(data.chatWppStringView);
+
+                    $('#IncidentesPartialLlamado').html(data.llamadoStringView);
+                }
+
+            });
+
+        }
+
+    </script>
+
+
+}
 
 
 

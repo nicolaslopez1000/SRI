@@ -144,7 +144,9 @@
     </Compile>
     <Compile Include="Helpers\FuncionarioHelper.cs" />
     <Compile Include="Helpers\IncidenteHelper.cs" />
+    <Compile Include="Helpers\ViewHelper.cs" />
     <Compile Include="Helpers\ViewModelHelper.cs" />
+    <Compile Include="Models\Classes\IncidentesPorDiaEmocion.cs" />
     <Compile Include="Models\Enums\Enums.cs" />
     <Compile Include="Models\Funcionario.cs">
       <DependentUpon>SRIModel.tt</DependentUpon>
@@ -164,6 +166,7 @@
     <Compile Include="Models\IncidenteMail.cs">
       <DependentUpon>SRIModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\FiltradoPorMesDiaTotalModelView.cs" />
     <Compile Include="Models\ViewModels\FiltradoVM.cs" />
     <Compile Include="Models\ViewModels\FuncionarioLoginVM.cs" />
     <Compile Include="Models\SRIModel.Context.cs">
@@ -375,6 +378,8 @@
     <Content Include="Views\Filtrado\FiltradoPorMesFuncionario.cshtml" />
     <Content Include="Views\Filtrado\FiltradoPorMesDiaTotal.cshtml" />
     <Content Include="Views\Horario\Edit.cshtml" />
+    <Content Include="Views\Shared\_Incidentes.cshtml" />
+    <Content Include="Views\Filtrado\ParcialFiltradoPorMesDiaEmocion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -28,7 +28,8 @@ namespace SRI.Models.ViewModels
         public System.DateTime fecha_suceso { get; set; }
 
         [Display(Name = "Fecha creacion")]
-        public Nullable<System.DateTime> fecha_creacion { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime fecha_creacion { get; set; }
 
         [Display(Name = "Emoción")]
         [Required(ErrorMessage = "Seleccione la emocion")]
