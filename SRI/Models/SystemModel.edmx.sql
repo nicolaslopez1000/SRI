@@ -1,11 +1,4 @@
 
--- --------------------------------------------------
--- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
--- --------------------------------------------------
--- Date Created: 08/02/2020 23:19:17
--- Generated from EDMX file: C:\Users\nicol\source\repos\nicolaslopez1000\ProyectoIntegrador\Integrador\Web\Models\SystemModel.edmx
--- --------------------------------------------------
-
 SET QUOTED_IDENTIFIER OFF;
 GO
 USE [db_SRI];
@@ -16,8 +9,6 @@ GO
 -- --------------------------------------------------
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
-
-
 
 IF OBJECT_ID(N'[dbo].[FK_FuncionarioIncidente]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Incidente] DROP CONSTRAINT [FK_FuncionarioIncidente];
@@ -45,7 +36,6 @@ IF OBJECT_ID(N'[dbo].[FK_FuncionarioAyudadoIncidente]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Incidente] DROP CONSTRAINT [FK_FuncionarioAyudadoIncidente];
 GO
 
-
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
@@ -58,9 +48,6 @@ IF OBJECT_ID(N'[dbo].[Horario]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[Incidente]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Incidente];
-GO
-IF OBJECT_ID(N'[dbo].[Destinatarios]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Destinatarios];
 GO
 IF OBJECT_ID(N'[dbo].[PalabraClave]', 'U') IS NOT NULL
     DROP TABLE [dbo].[PalabraClave];
@@ -177,8 +164,6 @@ ADD CONSTRAINT [PK_Incidente]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
-
-
 -- Creating primary key on [Id] in table 'IncidenteMail'
 ALTER TABLE [dbo].[IncidenteMail]
 ADD CONSTRAINT [PK_IncidenteMail]
@@ -219,25 +204,11 @@ ADD CONSTRAINT [FK_FuncionarioAyudadoIncidente]
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
-
-
-
-
-
-
-
-
-
-
-
 -- Creating non-clustered index for FOREIGN KEY 'FK_FuncionarioIncidente'
 CREATE INDEX [IX_FK_FuncionarioIncidente]
 ON [dbo].[Incidente]
     ([Funcionario_ci]);
 GO
-
-
-
 
 -- Creating foreign key on [Horario_Id] in table 'Funcionario'
 ALTER TABLE [dbo].[Funcionario]
@@ -281,9 +252,7 @@ ADD CONSTRAINT [FK_IncidenteChatWpp_inherits_Incidente]
     ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
--- --------------------------------------------------
--- Script has ended
--- --------------------------------------------------
+
 
 
 

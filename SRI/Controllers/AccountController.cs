@@ -43,7 +43,7 @@ namespace SRI.Controllers
 
                 var obj = db.Funcionario.Where(a => a.mail.Equals(funcionario.mail) && a.password.Equals(funcionario.password)).FirstOrDefault();
 
-                 if(obj.is_eliminado == true)
+                 if(obj == null || obj.is_eliminado == true)
                 {
                     ModelState.AddModelError(string.Empty, "Este funcionario ha sido eliminado, contactese con administración si esto es un error. ");
                 }

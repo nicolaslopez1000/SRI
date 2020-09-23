@@ -85,8 +85,6 @@ namespace SRI.Controllers
             string llamadoStringView = ViewHelper.RenderRazorViewToString(this.ControllerContext, "_Incidentes", listaIncidentesVM.Where(x => x.tipo == TipoIncidente.llamado));
             string mailStringView = ViewHelper.RenderRazorViewToString(this.ControllerContext, "_Incidentes", listaIncidentesVM.Where(x => x.tipo == TipoIncidente.mail));
 
-
-
             return Json(new { chatWppStringView, llamadoStringView, mailStringView });
         }
 

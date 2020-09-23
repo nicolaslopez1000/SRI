@@ -74,7 +74,7 @@ namespace SRI.Controllers
 
 
 
-                    Funcionario funcionarioAyudado = context.Funcionario.Find();
+                    Funcionario funcionarioAyudado = context.Funcionario.Find(incidenteChatWppVM.funcionario_ayudado_ci);
                     incidenteChatWpp.FuncionarioAyudado = funcionarioAyudado;
 
                     if (funcionarioAyudado == null )

@@ -70,7 +70,7 @@ namespace SRI.Helpers
                 listIncidentes = db.Incidente
                     .Include("Funcionario.Horario")
                     .Include("FuncionarioAyudado.Horario")
-                    .Where(a => a.fecha_creacion > firstDayOfMonth && a.fecha_creacion < lastDayOfMonth)
+                    .Where(a => a.fecha_creacion > firstDayOfMonth && a.fecha_creacion < lastDayOfMonth && a.is_eliminado == false)
                     .ToList();
             }
 

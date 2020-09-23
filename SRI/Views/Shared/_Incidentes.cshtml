@@ -56,9 +56,9 @@
             </td>
 
             <td class="botones">
-                @Html.ActionLink("Editar", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
+                @Html.ActionLink("Editar", "Edit","Incidente", new { id = item.Id },null) |
+                @Html.ActionLink("Detalles", "Details", "Incidente", new { id = item.Id }, null) |
+                @Html.ActionLink("Eliminar", "Delete", "Incidente", new { id = item.Id }, null)
             </td>
         </tr>
             }
